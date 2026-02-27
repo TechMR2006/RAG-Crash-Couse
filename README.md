@@ -34,15 +34,6 @@ It:
 
 ---
 
-## 📂 Project Structure
-#rag_project/
-│
-#├── rag.py
-#└── data/
-#├── data1.txt
-#└── data2.txt
-
-
 - `rag.py` → Main RAG pipeline
 - `data/` → Folder containing knowledge documents
 
