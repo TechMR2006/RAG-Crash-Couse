@@ -37,10 +37,10 @@ It:
 ## 📂 Project Structure
 #rag_project/
 │
-├── rag.py
-└── data/
-├── data1.txt
-└── data2.txt
+#├── rag.py
+#└── data/
+#├── data1.txt
+#└── data2.txt
 
 
 - `rag.py` → Main RAG pipeline
@@ -69,11 +69,7 @@ You can add more `.txt` files inside the `data` folder.
 5. 🔍 Retrieve most relevant documents
 6. 🧠 Generate answer using `distilgpt2`
 
----
 
-## 🛠 Installation
 
-### 1️⃣ Navigate to Project Folder
 
-```bash
-cd C:\Users\Admin\Desktop\rag_project
+
