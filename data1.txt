@@ -1,0 +1,1604 @@
+This article is licensed under CC-BY 4.0
+
+http://pubs.acs.org/journal/acsodf
+
+Article
+
+Reinforcement Learning-Based Nonlinear Model Predictive
+Controller for a Jacketed Reactor: A Machine Learning Concept
+Validation Using Jetson Orin
+Aishwarya Selvamurugan, Aromal Vinod Kumar, Hrishikesh R. Palan, Arockiaraj Simiyon,*
+and Thirunavukkarasu Indiran*
+
+Downloaded via 161.142.117.205 on August 2, 2025 at 23:47:16 (UTC).
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+Cite This: ACS Omega 2025, 10, 30864−30878
+
+ACCESS
+
+Read Online
+
+Metrics & More
+
+Article Recommendations
+
+ABSTRACT: In this research work authors have experimentally
+validated a blend of Machine Learning and Nonlinear Model
+Predictive Control (NMPC) framework designed to track the
+temperature profile in a Batch Reactor (BR) with an actor-critic
+reinforcement learning (A2CRL) methodology for dynamic weight
+updates. Recurrent Neural Network (RNN)-based approach for
+modeling is used for the open loop data collected from the lab scale
+batch reactor. Batch reactors are extensively utilized in industries
+like specialty chemicals, pharmaceuticals, and food processing
+because of their adaptability, especially for small-to-medium-scale
+production, intricate reaction dynamics, and diverse operational
+conditions. Thermal runaway in batch reactor is still an open-ended
+problem in process industry to address. The actor-critic method
+proficiently integrates policy optimization and value function estimates to dynamically regulate the heat produced by exothermic
+reactions. RNNs are employed to capture temporal dependencies in the system dynamics, enabling more accurate predictions and
+efficient control actions. The proposed framework is trained using open-loop experimental data and optimized to dynamically adjust
+the coolant flow rate, ensuring precise temperature regulation and stability. Compared to existing deep learning-based NMPC
+implementations, the proposed actor-critic methodology enhances NMPC controller performance by balancing prediction accuracy
+and real-time computational efficiency. Results demonstrate significant improvements in process efficiency, energy consumption
+reduction, and operational safety, validating the potential of this approach for deployment in industrial-scale batch reactor systems.
+
+1. INTRODUCTION
+Batch reactors (BRs) are extensively utilized in chemical and
+pharmaceutical industries for their adaptability in processing
+diverse chemical reactions and producing high-value products.1
+However, the nonlinear dynamics, time-dependent operational
+constraints, and sensitivity to external disturbances in BRs make
+precise control challenging.
+Control strategies have included machine learning (ML)
+approaches to enhance responsiveness and efficiency. This
+action was spurred by the increased demand for sophisticated
+control measures. Despite the increasing use of ML in real-time
+systems, there are still problems to be addressed in terms of
+Received: April 9, 2025
+Revised: June 27, 2025
+Accepted: June 30, 2025
+Published: July 9, 2025
+
+Figure 1. Pilot plant BR with Jetson Orin for validating ML algorithm in
+“Machine Learning for Advanced Process Control Lab, MIT, Manipal”.
+Image captured by Thirunavukkarasu Indiran.
+© 2025 The Authors. Published by
+American Chemical Society
+
+30864
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+Article
+
+Figure 2. Agent and environment interaction.
+
+Figure 3. Actor network architecture.
+
+Figure 4. Schematic of policy structure with batch reactor environment.
+
+stability and learning efficiency. The industry is seeking
+solutions that possess the ability to adapt to changing conditions
+while simultaneously retaining optimal performance. Traditional control systems typically rely mostly on static features and
+do not incorporate real-time feedback, resulting in reduced
+efficiency and an elevated error rate. These deficiencies were
+especially worrisome in relation to the difficulties of overseeing
+complicated systems.
+BRs are widely used in the process industry for a variety of
+chemical processes. The BR was operated using the coolant flow
+
+rate “Fc” and heater current “H” as inputs. The coolant flow rate
+varies from 0.25 to 0.75 mL/min, while the H goes from 4 to 20
+mA. The temperature of the reactor (Tr), the jacket (Tj), and the
+coolant (Tc) varied within the range of 0 to 100 °C as the output
+of the BR system. Figure 1 depicts the Pilot plant BR with Jetson
+Orin for validating ML algorithm in the “Machine Learning for
+Advanced Process Control Lab, MIT, Manipal”. This work
+employs the experimental setup and system dynamics utilized in
+ref 1 by the same authors. All the system dynamics are explained
+in this article. Controlling the BR’s temperature to achieve
+30865
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+Article
+
+Figure 5. Deployment of A2CRL algorithm on lab scale batch reactor.
+
+Figure 6. Agent−environment interaction in a Markov decision process.
+
+appropriate operating conditions is critical for ensuring the
+operation’s effectiveness and safety.2−4
+Traditional control approaches, like Proportional-IntegralDerivative (PID) controllers, though widely adopted, lack
+adaptability to changing system conditions and fail to handle
+nonlinearities effectively. Similarly, traditional Model Predictive
+Control (MPC) methods, while more capable of managing
+constraints and optimizing performance, are computationally
+demanding and heavily dependent on accurate system models,
+which limits their application to highly dynamic or uncertain
+systems.5,6
+Reinforcement learning (RL) tactics have gained recognition
+in recent years as a highly successful technique for efficiently
+addressing these challenges. This article proposes a novel
+approach by integrating RL with Nonlinear Model Predictive
+Control (NMPC), leveraging RL’s ability to adapt to changing
+system dynamics and uncertainties. By combining RL’s datadriven adaptability with NMPC’s optimization-based predictive
+control, this method overcomes the shortcomings of traditional
+controllers, enhancing robustness and efficiency in nonlinear
+process control scenarios.7,8
+The article is organized in the following manner: Section 2
+provides an in-depth analysis of the theoretical basis for the RL
+technique utilized in this work. Section 3 provides a
+comprehensive explanation of the methods utilized in this
+study: the formulation of the RNN model, the actor-critic
+(A2C) framework, the algorithm for NMPC parameter
+optimization, and the integration of RNN with MPC. Section
+4 delineates real-time validation. Section 5 presents a conclusion
+and outlines prospective research directions.
+
+Figure 7. Agent−environment interaction in real time.
+
+Figure 8. Actor-Critic approaches comparison.
+
+2. BACKGROUND THEORY
+This section discusses the background theory and literature
+survey used in this article. In the field of ML, RL is a powerful
+30866
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+Article
+
+Figure 9. Plot showing the mean square loss for the predicted Vs actual reactor temperature.
+
+2.1.1.3. Policy. A policy establishes the learning agent’s
+behavior at a specific moment, effectively mapping observed
+environmental states to appropriate actions. Two components
+form the agent: the policy and the learning algorithm. The policy
+functions as a mathematical function, assigning actions to
+observations, whereas the learning algorithm employs a
+computing technique to determine the most optimal policy.
+Both concepts are interrelated.11
+2.1.1.4. A Universal Function Approximator. The nodes in
+the artificial neural network have the ability to approximate
+universal functions. Therefore, by selecting the appropriate
+number of nodes and layers, it is possible to construct the
+network to replicate any specified input and output relationship.
+Although the function may be a bit complex, the universal nature
+of neural networks ensures that they can carry it out.12
+2.1.1.5. Policy Network. In Figure 3, the actor network
+architecture consists of 1 input, 1 output, and 2 hidden layers,
+with each hidden layer containing 3 nodes. In a fully connected
+network, every input node uses weighted connections to
+connect to each node in the subsequent layer. This pattern
+continues from one layer to the next until reaching the output
+nodes.11
+2.1.1.6. Policy Structure. RL methods use neural networks to
+accurately reflect the policy that the agent is implementing.13
+Given the strong connection between the policy structure and
+the RL method, it is impossible to identify the policy structure
+without simultaneously choosing the RL algorithm. Figure 4
+shows the discussed policy structure.
+2.1.1.7. Value Function. The value function of a state
+represents the expected sum of rewards that an agent will receive
+in the future, starting with that state. The RL algorithm estimates
+the value function based on rewards. Rewards assess the
+immediate, inherent appeal of environmental conditions, while
+values evaluate the long-term desirability of conditions,
+including the subsequent states and rewards that may be
+accessible.11
+2.1.1.8. Training. In RL, training entails iteratively improving
+an agent’s performance by allowing it to interact with the
+environment. The agent follows a policy and receives rewards.
+The primary goal of training is to optimize the policy so that the
+agent can maximize the cumulative reward. In several episodes,
+the agent experiments with a variety of techniques and learns
+from the results. The computationally expensive training phase
+requires data and time to produce excellent results.14,15
+
+methodology. This is particularly true for a group of algorithms
+that help with making decisions over time in complex real-time
+systems with nonlinear dynamics.
+2.1. Reinforcement Learning. Reinforcement learning
+(RL) operates in a dynamic environment to determine the best
+sequence of actions to achieve the optimal goal. This is
+accomplished by enabling a software component known as an
+agent to explore, interact with, and learn from the environment,
+as shown in Figure 2. The learning occurs through interaction
+with the environment, leading to the achievement of optimal
+goals related to the environment’s state. A reward signal
+determines the goal, which requires maximization. The agent
+must have the ability to partially or fully sense the environment’s
+state and take actions to affect the environment’s state through
+interaction. An agent learns to behave in an environment by
+performing actions and receiving feedback on its actions in the
+form of rewards. This article employs the RL algorithm that uses
+separate NNs to estimate the policy by the actor network (ATN)
+and the value function by the critic network (CRN).4,9
+2.1.1. Elements of Reinforcement Learning. The five
+essential aspects to consider in reinforcement learning are
+environment, reward, policy, training, and deployment. This
+section offers a concise elucidation of these words.10
+2.1.1.1. Environment. This includes all entities and
+phenomena that exist outside of the agent. From the BR
+controls’ point of view, the environment includes the system’s
+dynamics. This is the location where the agent transmits actions
+while concurrently producing rewards and observations.
+2.1.1.2. Reward Signal. After creating the environment, the
+next step involves determining the desired actions and the
+corresponding rewards for the agent. To get the desired
+outcome, it is necessary to create a reward function that enables
+the learning algorithm to recognize improvements in the policy
+and eventually reach the desired result through convergence. A
+reward can be designed considering actions, states, and errors
+between the desired state and the actual state. A reward signal
+defines the goal in a RL problem. The reward signal thus defines
+what the correct and incorrect events are for the agent. Equation
+1 shows a sample reward design as follows11
+l
+o
++ 10 if (s* s)
+o
+o
+o
+o
+rt = o
+m
++ 1 elif (s* s)
+o
+o
+o
+o
+o
+o
+n 10|s* s| else
+
+3
+5
+(1)
+30867
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+2.1.1.9. Deployment. In the field of RL, the trained agent
+executes its assigned tasks in the actual physical world or specific
+environment, as illustrated in Figure 5. This agent adheres to the
+policies it acquired during its training. During deployment, the
+agent is required to make instantaneous decisions and
+potentially react to minor fluctuations in the environment.
+The process entails thorough monitoring and evaluation to
+confirm that the agent’s performance aligns with expectations
+and to implement any necessary enhancements. In order to
+ensure that the RL model provides value in real-world scenarios
+without any unforeseen repercussions, the deployment process
+needs to consider scalability, efficiency, and safety.14
+2.1.2. Markov Decision Process (MDP). A Markov Decision
+Process (MDP) is a stochastic process that can be either discrete
+time or continuous time. The agent, actions, states (both current
+and future), the policy (which specifies the action to take), the
+reward associated with the transition, and the probability of
+transitioning and changing states are all key components of an
+MDP. The main challenge posed by MDPs is to determine the
+optimal policy for the agent based on its current state. The agent
+is responsible for making decisions and carrying out actions. As
+the agent transitions between states, the system operates in an
+environment that specifies its states. The MDP provides a
+method by which states and agents’ actions lead to transitions to
+other states. In addition, the agent receives a reward that is
+proportional to the activity it does and the state it reaches. Based
+on the agent’s current state, the policy for the MDP determines
+the action that the agent will take. Figure 6 illustrates the agentenvironment interaction. Figure 7 illustrates the real-time
+implementation of the agent in a BRPP. The MDP model is
+based on the Markov property. This property says that it is
+possible to determine the next state purely based on the current
+state, which contains all the necessary information from the
+previous states. MDPs are employed to address a diverse range
+of optimization and control challenges. Employing a range of RL
+approaches can overcome these issues.11,16,17
+In RL, dynamic programming (DP) is a collection of
+algorithms designed to identify the most efficient strategies.
+These algorithms identify strategies by assuming a customized
+MDP environment, a perfect representation of the environment.
+DP algorithms are particularly well-suited for optimization
+challenges because they explicitly design to assess previously
+solved subproblems and combine their solutions to produce the
+ideal solution for the current problem. This is because they were
+developed to address optimization issues.11
+2.1.3. Reinforcement Learning on Control Problems.
+Reinforcement learning (RL) provides promising results for
+finding optimal controllers for systems with nonlinear,
+potentially stochastic dynamics that are either unknown or
+extremely unpredictable. With an increasing demand for
+complex nonlinear control systems, the design of optimal
+controllers using classical methods is also increasing over time.
+RL is ideal for controlling a nonlinear complex system because it
+allows it to learn through exploration and adapt to a dynamic
+environment. There are vast RL algorithms available, such as
+Temporal Difference, A2C Networks, and Value Function
+Approximation.3,18
+2.1.4. The Actor-Critic Framework. Actor-critic methods
+combine two main networks: the actor network, which suggests
+actions based on the current policy, and the critic network,
+which evaluates the action by computing the value function.
+This dual approach allows for more stable and efficient learning
+by combining the advantages of policy optimization and value
+
+Article
+
+estimation. The actor and critic are neural networks that aim to
+learn the most optimal behavior through learning. The actor
+learns the appropriate behaviors by utilizing input from the critic
+to distinguish between good and bad actions, while the critic
+learns the value function through receiving rewards in order to
+effectively evaluate the actor’s actions.19
+By employing actor-critic approaches, as shown in Figure 8,
+the agent can use the most advantageous aspects of policy and
+value function algorithms. These networks can manage both
+continuous state and action spaces, and they can expedite the
+learning process when the received reward exhibits a high degree
+of variance.20 In real-time control systems, these methods are
+particularly beneficial due to their ability to adaptively optimize
+control policies in the face of changing conditions and
+requirements. They are used in robotics, autonomous vehicles,
+and complex real-time systems.
+There are various types of actor-critic algorithms designed to
+improve the efficiency and stability of RL models. The
+Advantage Actor-Critic (A2C) algorithm utilizes the advantage
+function to reduce the variance while updating policy
+parameters (actor weights) and value-function parameters
+(critic weights).21 This approach helps stabilize the learning
+process by focusing on the relative value of actions rather than
+their absolute value. On the other hand, the Asynchronous
+Advantage Actor-Critic (A3C) algorithm builds upon A2C by
+employing multiple agents that explore different parts of the
+environment simultaneously. This asynchronous approach not
+only enhances learning speed but also improves stability, as the
+diverse experiences gathered by multiple agents help in better
+approximating the optimal policy and value functions. A3C is
+particularly effective in complex environments where synchronous updates might lead to slower convergence or instability due
+to correlated experiences among agents.
+An actor is a neural network that gives the agent direct
+instructions about what actions it should take. Given the current
+state, the actor network is trying to determine the best possible
+action. The actor’s objective is to optimize the policy that
+maximizes expected rewards. In this article, the actor assigns
+actions to the BR environment. The BR environment is
+primarily responsible for selecting the best actions.
+The critic network represents the value function. This
+network inputs state observations and outputs the appropriate
+value. The policy then selects the action with the highest value.
+Over time, the network will gradually approach a function that
+accurately predicts the value of any action in any part of the
+continuous state space. The critic network computes the value
+function to evaluate the actor’s action. The critic eventually uses
+the reward earned through the environment to determine the
+accuracy of its value estimation. The error refers to the difference
+between the newly estimated value of the previous state and the
+initial estimate of the previous state obtained from the critic
+network. The new estimated value is determined by the received
+rewards and the discounted value of the current state. The error
+provides the critic network with an idea of whether states turned
+out good or bad than expected.22
+2.2. Literature Review. Lin et al.14 present a novel RLbased MPC framework for discrete-time processes. The
+framework combines RL with MPC via policy iteration. This
+framework uses RL for policy evaluation and the MPC as a
+policy generator. The derived value function serves as the
+terminal cost in MPC. This improves the resulting policy. This
+approach eliminates the necessity for the offline design
+framework concerning terminal costs, auxiliary controllers, and
+30868
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+terminal constraints in conventional MPC. Moreover, the
+RLMPC facilitates an adaptable selection of prediction horizon
+by removing the terminal requirement, hence significantly
+diminishing the computing load. Simulation results indicate that
+RLMPC attains performance comparable to classic MPC in
+controlling linear systems and demonstrates advantages in
+managing nonlinear systems.
+Small- and medium-sized systems frequently lack a
+comprehensive dynamic model and instead rely on classical
+PID controllers, which are unable to ensure consistent set point
+tracking throughout a process’s evolution. To address this
+limitation, an NMPC strategy, combined with system
+identification techniques, has been proposed by Medina−
+Ramos et al.23 This method utilizes a Volterra series-based
+approximate model, projecting the kernels onto orthogonal basis
+functions (OBFs) for precise system representation. The
+NMPC strategy leverages a control technique akin to dynamic
+matrix control (DMC) and demonstrates superior performance
+compared to traditional PID controllers, particularly in temperature trajectory tracking. The proposed scheme highlights its
+potential for facilities where precise temperature control is
+critical for ensuring high-quality final products, making it a
+promising alternative to conventional methods in nonlinear
+systems.
+Hassanpour et al.24 proposed an offset-free MPC to design an
+RL-based controller for nonlinear systems without offsets. RLbased controllers can modify their control strategies utilizing
+real-time data from interactions between the controller and the
+process. This reduces model maintenance, which is essential in
+advanced control methods like MPC. Stochastic explorations are
+essential for an RL agent to identify optimal state-action regions
+and attain the best policy. This is unfeasible in reality owing to
+safety and expense. A pretraining method secures online RL
+controller deployment. Offline RL agent training employs an
+offset-free model predictive control optimization issue. The RL
+agent manages the operation in real-time and exhibits
+performance akin to offset-free MPC. The simulation results
+illustrate the method’s capacity to manage nonlinearity and
+operational conditions of the plant induced by unmeasured
+disturbances. The oscillatory closed-loop responses of the offsetfree MPC, caused by differences between the plant and model as
+well as unmeasured disturbances, can be substantially enhanced
+by the proposed RL controller.
+NMPC is applied to industrial BRs to address safety and
+productivity limitations resulting from swelling. The catalyst,
+introduced in incremental stages, generates uncertainty in
+feeding time, mass, and purity, necessitating online management
+to manage disruptions. A shrinking horizon optimal control
+framework, integrated with reaction and hydrodynamic models,
+is used for real-time optimization. While offline methods
+optimize the temperature profile for fixed catalyst dosing, the
+proposed online strategy by Simon et al.25 dynamically adjusts to
+disturbances. This ensures optimal temperature tracking
+without level swelling, highlighting its effectiveness in
+maintaining safety and efficiency in BR operations.
+Marquez-Ruiz et al.26 explore the control of batch processes
+using MPC and Iterative Learning Control (ILC). Traditional
+approaches often rely on fixed linear time-invariant (LTI)
+models, which struggle to capture the nonlinear and timevarying nature of batch processes. The authors propose a novel
+ML-MPC framework that integrates MPC and ILC with linear
+parameter-varying (LPV) models to better capture these
+dynamics. Three estimation methods for model parameters
+
+Article
+
+and disturbances are tested through simulations applied to a
+nonlinear BR. Finally, the ML-MPC approach is demonstrated
+on an industrial reactive batch distillation column, showing its
+potential for improving control in time-varying processes.
+Zheng and Wu27 developed a framework integrating ML
+models and predictive control schemes to optimize batch
+crystallization processes. Utilizing a population balance model
+(PBM) to describe crystal formation dynamics, they trained
+recurrent neural network (RNN) models on PBM simulations
+to capture process behavior under diverse conditions. These
+RNN-based Model Predictive Control (MPC) schemes
+demonstrated improved computational efficiency and control
+performance, optimizing crystallization yield, crystal size, and
+energy consumption while adhering to input constraints.
+Wong et al.28 explored the use of RNNs for MPC in
+continuous pharmaceutical manufacturing, focusing on addressing complex dynamics and reaction kinetics. This work
+emphasized the adoption of data-driven models like RNNs
+over traditional physics-based models, showcasing effective
+closed-loop control for a continuous-stirred tank reactor
+(CSTR). Both studies highlight the significant potential of
+RNNs in capturing process dynamics and enhancing control
+strategies in chemical engineering applications.
+Meng et al.29 explored the application of RNN-LSTM-based
+MPC in the corn-to-sugar (CTS) process, addressing the
+challenges posed by complex physical and chemical dynamics.
+The study emphasized preprocessing and dimensionality
+reduction of input variables, followed by sensitivity analysis to
+identify key factors influencing the process. Using these inputs,
+an RNN-LSTM model was constructed to predict the dextrose
+equivalent value. The RNN-LSTM served as the predictive
+model in the MPC system, enabling effective control of the
+dextrose equivalent under varying set point changes and
+disturbances in simulation studies. This research demonstrated
+the potential of RNN-LSTM-based MPC to enhance control
+precision in the CTS process.
+Wijaya et al.30 investigated the integration of NNs and RL into
+control system design, focusing on addressing the limitations of
+offline NN learning by enabling online adaptation. An LSTMenabled model-based RL (Mb-RL) approach is utilized to
+record local system dynamics and adapt to environmental
+changes. The study utilized an MPC framework as the RL agent,
+applying a random shooting policy to minimize the control
+objective function. The proposed method was tested on a
+nonlinear mass spring damper (NMSD) system with varying
+inertia parameters, demonstrating effective control over highoscillating nonlinear systems. The findings highlight the
+potential of LSTM-enabled Mb-RL in improving the robustness
+and adaptability of control systems.
+Reiter et al.31 proposed a hybrid control strategy combining
+MPC and RL to leverage their complementary advantages. The
+RL critic approximates the optimal value function, while the
+actor roll-out provides an initial guess for MPC’s primal
+variables. A parallel control architecture is introduced, where
+MPC solves two instances for different initializations: one from
+the actor roll-out and another from the previous solution’s
+shifted state. The actor and critic assess the infinite horizon cost
+of these trajectories, using the control action from the trajectory
+with the minimal cost at each time step. The proposed method
+guarantees improved performance over the original RL policy,
+with an error term that diminishes as the MPC horizon
+lengthens. This approach is validated through a toy example and
+30869
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+an automated driving overtaking scenario, demonstrating its
+effectiveness in enhancing control performance.
+In conclusion, the underlying theory and literature evaluation
+establish the basis for using RL in batch reactor control.
+Especially in addressing the complexity and uncertainty inherent
+in real-time control systems, the review shows the adaptability
+and efficiency of RL techniques. All the methodologies in the
+literature review corroborate the model’s performance through
+simulation; however, this paper conducts validation using
+experimental data. The proposed architecture is unique in its
+ability to continuously maximize control actions, balancing
+policy and value estimations for consistent learning. This
+research intends to design a strong control strategy for a batch
+reactor using recent developments in machine learning and RL,
+potentially going beyond traditional methods like PID
+controllers. This approach promises enhanced safety, efficiency,
+and product quality in chemical production processes, aligning
+with the industry’s evolving demands for advanced control
+solutions. The proposed framework is trained using open-loop
+
+Article
+
+information, RNNs can retain contextual information from
+past inputs,32 which is essential for understanding the temporal
+dependencies in BR dynamics.
+This paper develops the RNN model utilizing data obtained
+from comprehensive open-loop simulations of the BR,
+encompassing variables such as reactor temperature (Tr),
+coolant flow rate (Fc), jacket temperature (Tj), and heater
+current (H). The Tr is considered the state x, while the Fc serves
+as the control input u. A total of 10,300 examples were generated
+with a fine time step during the simulations.
+To handle the inherent complexity of accurately describing
+the dynamic changes in the BR, the time-series data is
+transformed into dynamic data sets using an extended sliding
+window approach. This transformation allows the model to
+effectively leverage past information for predicting future states.
+The data set is subsequently divided into training and test sets
+for the purposes of model training and evaluation.
+The RNN is configured as a multiple-input, single-output
+system to predict the Tr. Specifically, the model is trained to
+forecast x(t + 1) based on the current and past reactor
+temperatures x (t = 0, 1,···,l) and coolant flow u(t = 0, 1,···, l).
+The time lag l is obtained from experimental optimization,
+where values from 10 to 70 were tested, and l = 50 was found to
+yield the lowest root mean squared error (RMSE) on the
+validation set. This value effectively balances model complexity
+and accuracy by capturing long-term temporal dependencies
+without overfitting. By adjusting Fc based on Tr, the model
+ensures efficient regulation of the heat generated by the
+exothermic reaction in the BR.
+3.1.1. Structure of RNN Model. The Recurrent Neural
+Network (RNN) model developed for predicting reactor states
+is implemented in PyTorch. This model effectively captures
+temporal dependencies in the BR dynamics using sequential
+data and is structured as a multiple-input, single-output system.
+A detailed description of the architecture and its mathematical
+formulation are given in Sections 3.1.2 and 3.1.3.
+3.1.2. Input-Output Structure. The RNN model is structured
+as a multiple-input, single-output system to predict the Tr at the
+next time step x(t + 1), leveraging sequential data on current and
+past states x(t = 0, 1,···, l) and control inputs u(t = 0, 1,···, l). The
+architecture includes: an input layer for processing multivariate
+time-series data, a recurrent layer for learning temporal
+relationships, and a f ully connected output layer for predicting
+the Tr. The system utilizes a sequence-to-single-output approach
+
+The proposed framework is
+trained using open-loop experimental data
+experimental data and optimized to dynamically adjust the
+coolant flow rate, ensuring precise temperature regulation and
+stability. Compared to existing deep learning-based NMPC
+implementations, the proposed actor-critic methodology
+enhances NMPC controller performance by balancing prediction accuracy and real-time computational efficiency. Section
+3 delineates the suggested model comprehensively.
+
+3. PROPOSED METHODOLOGY FOR THE MODEL
+VALIDATION
+This section highlights the evolution of the RNN model, its
+mathematical formulation, BRs, batch polymerization, the A2C
+framework for NMPC parameter optimization, the A2C
+algorithm for the NMPC parameter optimization workflow,
+and the integration of the RNN model with MPC.
+3.1. Development of RNN Model. Recurrent neural
+networks (RNNs) are proficient in modeling complex and
+nonlinear interactions between input and output data, making
+them particularly suitable for time-series data and nonlinear
+problems. Leveraging their ability to process sequential
+
+Figure 10. Recurrent neural network model fit of batch reactor open loop data.
+30870
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+Article
+
+Figure 11. Flowchart for the Actor-Critical algorithm for the NMPC parameter optimization.
+
+Figure 12. Block diagram for the overall framework.
+
+Figure 13. Closed loop trajectory tracking of RL in Simulation.
+30871
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+Article
+
+Figure 14. Control signal of RL controller-simulation.
+
+Figure 15. Closed loop trajectory tracking and control signal of RL-NMPC in simulation.
+
+where nfeatures is the number of input features.
+The input sequence over a time horizon (l) is given in eq 3
+
+Table 1. Comparison of Performance Indices with Class of
+NMPC
+S. No.
+
+MSE
+
+MAE
+
+integral MSE
+
+PNMPC(x)
+PSIG (x)
+PRLNMPC (x)
+
+2.6674
+1.0038
+0.8005
+
+1.5515
+0.9798
+0.6152
+
+2.6674
+1.0038
+0.6103
+
+X = {x1, x 2 , ··· xl}
+
+3.1.3.2. Input-Output Structure. The system is formulated as
+shown in eq 4
+yt = f (x1, x 2 , ··· xl , u1, u 2 , ··· ul)
+
+where predictions are based on the hidden state of the final time
+step.
+3.1.3. Mathematical Formulation of the RNN. This section
+derives the mathematical formulation of the RNN model’s
+input-output structure, recurrent layer dynamics, and output
+layer.26
+3.1.3.1. Input Representation. Equation 2 represents the
+vector input to the model at each time step t.
+xt = [Tr(t ), Ft (t )]
+
+Rnfeatures
+
+(3)
+
+(4)
+
+where f is a nonlinear mapping learned by the RNN.
+3.1.3.3. Recurrent Layer Dynamics. The recurrent layer
+computes a hidden state ht using eq 5 at each time step based on
+the current input xt and the previous hidden state ht−1.
+ht = f (Whxt + Uhht 1 + bh)
+
+(5)
+
+where
+• Wh ∈ Rnhidden × nfeatures: Input-to-hidden weight matrix
+• Uh ∈ Rnhidden × nhidden: Hidden-to-hidden weight matrix
+
+(2)
+30872
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+• bh ∈ Rnhidden: Bias vector
+• f: Activation function (ReLU).
+Equation 6 gives the output of the recurrent layer across all
+time steps as a sequence of hidden states
+H = {h1, h2 , ··· hl }
+
+u(k + Nc|k) =
+
+=0
+
+Equations 9 to 11 delineate the NMPC objective function and
+control constraints. References 1 and 33 cite the author’s
+previously published works on NMPC with numerical control
+restrictions to enhance reader comprehension.
+3.2.1. Batch Polymerization. Batch polymerization involves
+the dynamic interplay of the reactor, jacket energy balance, and
+reaction kinetics equations. In this study, the acrylamide
+polymerization reaction is considered, with the concentrations
+of the initiator ammonium persulfate [I] and the monomer
+acrylamide [M] estimated using appropriate approximations as
+given in eqs 12 and 13.
+
+where ht ∈ Rnhidden encapsulates the temporal information up to
+time t.
+3.1.3.4. Output Layer. The output layer uses the hidden state
+of the final time step hl to predict the next state x (t + 1). The
+transformation is defined as given in eq 7.
+(7)
+
+where
+• Wo ϵ Rnhidden × nfeatures: Weight matrix of the fully connected
+layer
+• b0 ∈ Rnoutput: Bias vector
+• y ∈ Rnoutput: Predicted state.
+3.1.3.5. Training Objective. The model is trained to minimize
+the mean squared error (MSE) between the predicted reactor
+temperature (y) and the actual temperature (ŷ) from simulation
+data. The MSE to calculate the loss is given in eq 8.
+1
+(y(i)
+N i=1
+
+u(k | k) ··· u(k + Nc 1 | k)
+
+mjcpj
+
+UA(Tr
+
+Tj) + Q h + Q s
+
+j = 0, 1, 2, ··· Nc
+
+(15)
+
+(16)
+
+Tamb)
+
+(18)
+
+micpi
+(19)
+
+micpi
+(20)
+
+The heat loss coefficients α and β are evaluated using a leastsquares approach, and the overall heat transfer coefficient U is
+computed based on the BR’s time constant.
+3.3. Actor-Critic Framework for NMPC Parameter
+Optimization. The A2C algorithm is a reinforcement learning
+method that integrates the benefits of policy-based and valuebased approaches.34 It is particularly suited for solving
+continuous control problems, such as fine-tuning the parameters
+of the objective functions in NMPC for BRs. This section
+outlines the A2C framework and its components, emphasizing
+its mathematical foundation and relevance to the NMPC
+system.
+3.3.1. Overview of the A2C Architecture. The A2C
+framework consists of two main components:
+1. Actor: The policy network responsible for selecting
+actions (e.g., control parameters like R1 and R2 in
+
+j
+(11)
+
+with subject to constraints
+umax ,
+
+Tc)
+
+8
+
+j = 1, 2, ··· Np
+
+1
+
+Fccpc(Tj
+
+(17)
+
+i=1
+
+i=7
+
+1|k),
+
+Tj)
+
+6
+
+(10)
+
+= 0, 1 ··· Nc
+
+d[M]
+V Hp
+dt
+
+mr cpr =
+
+where E(k + j|k) and Δu(k + j|k) are calculated using eqs 10 and
+11 respectively.
+
+u(k + j
+
+= UA(Tr
+
+Q loss = (Tr
+
+(9)
+
+u (k + j|k) = u(k + j|k)
+
+dt
+
+Q s = p0 n3d5
+
+j =1
+
+yc (k + j|k),
+
+dTj
+
+Qr =
+
+WE(E2(k + j|k))
+
+E (k + j|k) = ysp (k + j|k)
+
+Q loss
+
+Here the values for Qr, Qs, Qloss, mrcpr, and mjcpj are calculated
+using eqs 16−20.
+
+Wu( u2(k + j|k))
+
+u(k + j|k)
+
+dTr
+= Qr
+dt
+
+mjcpj =
+
+j= 0
+
+umin
+
+(13)
+
+A p[I ] [M] e( Ep / R(Tr + 273.15))
+
+(14)
+
+Nc 1
+
++
+
+d[M]
+=
+dt
+
+(8)
+
+Np
+
+min
+
+(12)
+
+mr cpr
+
+y (i) )2
+
+where N is the number of training samples. Figure 9 shows the
+MSE loss for the predicted and actual Tr. Figure 10 shows the
+RNN model fit for the BR open loop data.
+3.2. Nonlinear Model Predictive Controller (NMPC)
+Design. The NMPC model forecasts over a limited prediction
+horizon spanning several timesteps, focusing on optimizing the
+Fc to maintain the desired Tr. It ensures the efficient operation of
+the BR by determining the appropriate coolant flow outlet. By
+leveraging past Tr data, Fc, and predictions from the RNN model,
+the NMPC prescribes the required coolant flow adjustments.
+To manage the manipulated variable (u), a soft constraint
+approach is adopted. Slack variables, integrated into the
+objective function to be minimized, provide flexibility by
+relaxing the imposed limits. For a time step t, with a fixed
+prediction horizon (Np) and a control horizon (Nc), the
+scheduling framework is formulated as given in eq 9.
+J=
+
+d[I]
+= Ad [I]e( Ed / R(Tr + 273.15))
+dt
+
+The dynamics of the reactor temperature Tr and the jacket
+temperature Tj are calculated using eqs 14 and15.
+
+N
+
+MSE Loss =
+
+u(k + Nc + 1|k)
+
+= ··· u(k + Nc + 1|k)
+
+(6)
+
+y = Wohl + bo
+
+Article
+
+1
+30873
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+3.3.2.2. Reward Structure. The reward function is derived
+from the negative optimal cost obtained from the NMPC cost
+function. This approach ensures that minimizing cost directly
+aligns with maximizing the RL reward, thus guiding optimal
+control actions. The formulation is given in eq 25.
+where:
+
+NMPC). The actor outputs a probabilistic or deterministic policy, πθ(a|s), which defines the likelihood of taking
+an action a in a given state s.
+2. Critic: The value network responsible for evaluating the
+quality of actions taken by the actor. It estimates the
+expected return (cumulative reward Vϕ(s)), for a given
+state s, guiding the actor to improve its policy.
+The interaction between the actor and the critic enables
+efficient learning and fine-tuning of parameters.
+3.3.2. Problem Formulation in the NMPC Context. For a BR
+system controlled via NMPC, the A2C algorithm optimizes the
+parameters of the objective function by learning from the state
+transitions and feedback rewards. Let: st represent the state of
+the reactor at time t, including Tr, Fc, and other relevant
+dynamics. at = [R1, R2] represents the control parameters (e.g.,
+weighting factors or reference values) output by the actor. rt
+denotes the reward received after applying action at in state st,
+which reflects the performance of the NMPC system, such as
+minimizing temperature deviations or optimizing energy
+efficiency.
+The goal is to maximize the cumulative reward J(πθ) given in
+eq 21.
+ÄÅ
+ÉÑ
+ÅÅ
+ÑÑ
+ÅÅ
+t Ñ
+J( ) = E ÅÅ
+rt ÑÑÑ
+ÅÅ
+ÑÑ
+ÅÇ t = 0
+ÑÖ
+(21)
+
+rt =
+
+[
+
+(a|s) a Q (s , a)]
+
+(26)
+
+The critic’s parameters ϕ are updated by minimizing the
+temporal difference (TD) error using eq 27.
+Lcritic( ) = E(s , a , r , s )[(Q (s , a)
+
+R1
+
+(23)
+
+R 2 = (r2,raw).
+
+R2 +
+
+R2
+
+(24)
+
+(27)
+
+Q (s , a ) = r (s , a ) + V (s )
+
+is the TD target.
+The critic guides the actor by providing gradients of Qπ(s, a)
+with respect to a.
+3.3.2.4. Ornstein−Uhlenbeck Noise for Exploration. In
+continuous action spaces, the A2C algorithm often employs
+exploration noise to ensure sufficient exploration of the stateaction space. In this implementation, Ornstein−Uhlenbeck
+(OU) noise is used, which is defined as given in eq 28.
+xt + 1 = xt + (
+
+xt ) +
+
+t
+
+(28)
+
+here θ controls the mean reversion speed, μ is the mean of the
+(0,1) is
+noise process, σ determines the noise amplitude, t
+Gaussian noise.
+This noise facilitates exploration by adding temporally
+correlated variations to the action space. In this implementation,
+the Ornstein−Uhlenbeck (OU) noise parameters are carefully
+chosen to balance exploration and stability in the A2C
+reinforcement learning framework. The mean reversion speed
+θ = 7 ensures that the noise quickly returns to its mean value μ,
+preventing excessive deviation and maintaining stable exploration. The mean value μ = 10 acts as the baseline around which
+the noise fluctuates, influencing the scale of control parameter
+adjustments for R1 and R2. Additionally, the noise amplitude σ =
+10 introduces high variability in the action space, promoting
+diverse exploration and preventing premature convergence to
+suboptimal policies. These values were empirically tuned
+through an ablation study, in which each parameter was varied
+while observing its effect on convergence speed, variance in
+policy updates, and closed-loop control stability. The chosen
+configuration demonstrated the fastest convergence and
+minimized oscillations in reward trends. Together, these
+parameters enable the RL agent to explore a wide range of
+NMPC weight values while ensuring that the learning process
+remains stable and responsive to reactor dynamics.
+3.3.2.5. Actor-Critic Algorithm for NMPC Parameter
+Optimization Workflow. The CRN evaluates the control
+
+Here, R1 penalizes temperature tracking error, ensuring the
+reactor follows the reference trajectory. R2 penalizes excessive
+fluctuations in coolant flow to avoid aggressive control actions. σ
+is the sigmoid activation function, which ensures that the values
+remain within a stable range. ∇R1, ∇R2 define the scaling range,
+corresponding to
+• R1 scaled between 15, 50
+• R2 scaled between 5, 1
+• μR1, μR2 are offset values, ensuring an appropriate
+initialization for NMPC.
+The sigmoid activation function σ(x) restricts the raw outputs
+r1,raw and r2,raw within a normalized range [0,1] before applying
+the scaling transformation. These weights R1 and R2 are
+dynamically adjusted by the ATN using reinforcement learning.
+The actor learns an optimal trade-off between tracking accuracy
+and control smoothness.
+d
+
+Q (s , a))2 ]
+
+here
+
+where:
+• Qπ (s,a) is the action-value function, estimated by the
+critic.
+• ∇θπθ(a|s) represents the gradient of the policy with
+respect to its parameters.
+The actor produces scaled outputs R1 and R2 using eqs 23 and
+24.
+R1 +
+
+(25)
+
+Q (s , a) = E s p Q (s , a) = E s p [r(s , a) + V (s )
+
+(22)
+
+R1 = (r1,raw).
+
+JNMPC
+
+• JNMPC is the cost function of the NMPC optimization
+problem, accounting for tracking errors and control effort.
+• A lower NMPC cost corresponds to a higher reward,
+reinforcing optimal tuning of NMPC parameters.
+3.3.2.3. Critic Network. The critic evaluates the quality of the
+actor’s policy by estimating the state-value function V⌀(s) or the
+action-value function Qπ(s, a) using eq 26.
+
+where γ ∈ [0,1] is the discount factor.
+3.3.2.1. Actor Network−Policy Formulation and Parameter Scaling. The actor defines the policy πθ(a|s), parametrized
+by θ, and outputs the control parameters R1 and R2. The policy is
+updated using the deterministic policy gradient theorem given in
+eq 22.
+J( ) = Es p , a
+
+Article
+
+d
+
+30874
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+performance and updates the ATN, refining R1 and R2 over time.
+A flowchart for the A2C algorithm for the NMPC parameter
+optimization is given in Figure 11.
+Figure 12 illustrates the block diagram of the comprehensive
+framework. Initially, open-loop data gathering was conducted
+from the batch reactor. The subsequent phase involved the
+modeling and validation of the RNN. The subsequent phase
+involved the implementation of RL-NMPC design utilizing
+RNN model predictions. The code was subsequently downloaded into the Jetson Orin. The subsequent phase involved the
+scaling of signals. The real-time validation of RL-NMPC has
+been successfully accomplished.
+The A2C algorithm for NMPC parameter optimization
+follows these steps:
+
+Article
+
+disturbances. Soon, authors will be able to write a paper
+featuring self-correction of the temperature profile in the
+presence of uncertainty.
+3.4. Combining RNN Model with MPC. Model Predictive
+Control (MPC) is a robust control strategy that relies on a
+dynamic system model to predict future states and optimize
+control actions over a defined horizon while satisfying system
+constraints.35 Traditionally, these system models are derived
+from first-principles equations, such as energy balance and
+reaction kinetics for BRs. However, deriving and solving such
+models can be computationally expensive and prone to
+inaccuracies due to unmodeled dynamics or parameter
+uncertainties, posing challenges for real-time applications.36
+To address these issues, ML models, particularly recurrent
+neural networks (RNNs), offer a data-driven alternative. RNNs
+can learn complex, nonlinear system dynamics directly from
+data, eliminating the need for explicit physical modeling.37 They
+provide faster predictions and improved accuracy by capturing
+time dependencies and intricate nonlinearities, making them
+ideal for integration with MPC. By replacing the traditional
+prediction model in MPC with an RNN, the combined
+framework leverages the predictive power of deep learning
+while maintaining the robustness and constraint-handling
+capabilities of MPC.38 In this study, the methodology from ref
+39 is employed to merge a PyTorch-based RNN model with the
+CasADi framework, enabling efficient implementation and realtime optimization for BR control.35
+3.5. Forecasting Ability of Proposed RNN Model with
+A2CRL. This article implemented the A2CRL algorithm in
+Python on a Jetson Orin 8GB Nano board, aiming to control the
+optimal Tr of the BR system by tracking the reference
+temperature profile.40 The agent is trained in a simulation
+environment that accurately replicates a BR’s dynamic behavior.
+This A2CRL approach demonstrated oscillations in controlling
+the Tr conditions, and it could struggle to constantly maintain
+the desired Tr. Figure 13 illustrates the simulated closed-loop
+response for BR. Figure 14 illustrates the rate at which coolant
+flows. The outcome indicates oscillations in the reactor’s
+temperature compared to the reference trajectory’s temperature.
+After training the reinforcement model for several episodes, we
+found that the tracking was not perfect. This motivated us to
+propose the NMPC framework that tracks the temperature
+profile in a BR using an A2CRL methodology and an RNNbased approach. The authors would like to note that standard
+PID control does not adequately address the temperature profile
+tracking of batch reactors. In the past, authors have applied
+conventional PID controllers to a batch reactor for temperature
+trajectory tracking. Due to the dynamic nature of the set point
+and the process’s nonlinearity, the PID controllers exhibited
+inadequate control signal variations between 0 and 100 on a
+continuous basis.41 This behavior of control action may result in
+pneumatic control valve failure or diaphragm rupture.
+Consequently, the pursuit of sophisticated control algorithms
+emphasizing seamless control action.
+In this article, the open loop Tr data was gathered by varying
+the Fc while maintaining a constant heater supply, resulting in a
+data set of 10,300 samples. Since noise and measurement delays
+were minimal, no additional preprocessing techniques were
+required. This data set was subsequently utilized to develop the
+BR model using an RNN.
+To assess the forecasting performance of the proposed model,
+a sequence length l of 50 days was employed for training without
+introducing any lag. The model was trained over 100 epochs
+
+By integrating the A2C reinforcement learning algorithm with
+Nonlinear Model Predictive Control (NMPC) for the jacketed
+batch reactor (BR):
+• The ATN dynamically adjusts the NMPC weighting
+parameters (R1, R2) in real-time, optimizing the balance
+between temperature set point tracking and coolant flow
+regulation. The Fc is the primary manipulated variable that
+counteracts exothermic reaction heat, ensuring reactor
+stability. The Tr serves as the key process state, influencing
+reaction kinetics and product yield.
+• The CRN evaluates the long-term impact of these
+adjustments, ensuring improved reactor stability, reduced
+control effort, and energy efficiency.
+• The addition of Ornstein−Uhlenbeck (OU) noise
+facilitates exploration, allowing the RL agent to handle
+process uncertainties, exothermic reaction dynamics, and
+nonlinearities in the reactor system.
+This RL-NMPC framework enables real-time adaptive
+control of Tr on the Jetson Orin platform, ensuring smooth
+control actions while mitigating oscillations and enhancing
+process efficiency.
+Given that it is a nonsteady-state temperature profile, the
+initial conditions remain constant. A nonlinear temperature
+profile is employed as a reference trajectory for tracking with RLNMPC. This study does not examine the disturbance
+component; nevertheless, the authors are developing a method
+for self-correction of the temperature profile in the presence of
+30875
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+Article
+
+Figure 16. a. Experimental closed loop execution of RL-NMPC using Jetson Orin 8GB via Python code. (b) Control signal of closed loop RL-NMPC
+experimentation.
+
+using an RNN architecture with 128 hidden units per layer. The
+ReLU activation function was used implicitly in the RNN layer
+to introduce nonlinearity and stability. A batch size of 64 was
+selected to balance computational efficiency and convergence
+stability. Hyperparameter tuning was performed through an
+iterative process, where different combinations of learning rates,
+hidden units, batch sizes, and activation functions were tested.
+The final configuration was chosen based on empirical
+validation, with a learning rate of 1e-3 optimized using the
+Adam optimizer to ensure stable convergence while preventing
+overfitting. The Mean Squared Error (MSE) loss function was
+used to measure prediction accuracy. Notably, this configuration
+reduced the final training MSE from ∼17.05 (with learning rate
+1 × 10−2, batch size 32) to 0.0009, demonstrating a significant
+improvement in convergence.
+The trained RNN model is used to predict the next Np states
+at each time step, which are then used by the NMPC to
+minimize the cost function. By feeding the weights We and Wu
+from the A2C algorithm, the Fc is predicted by the NMPC.
+Figure 15 illustrates the tracking of the Tr in relation to the
+desired trajectory and the control signal of RL-NMPC in
+simulation. The effectiveness of the proposed approach is
+further confirmed by the performance measures. Table 1 shows
+the comparison of performance indices with an Integral MSE of
+0.6103, an MAE of 0.6152, and an MSE of 0.8005, the model
+
+demonstrates exceptional tracking accuracy and predictive
+ability.
+
+4. REAL-TIME VALIDATION
+The following Figure 16a,b shows the experimental validation of
+Reinforcement Learning based Nonlinear Model Predictive
+Controller. The experimental data obtained are filtered to
+remove the noise signals using smooth data command in
+MATLAB 2024 version. The simulated Python code was
+downloaded into the Jetson Orin 8GB board. The processor
+used is a Jetson Orin Nano SoC with 8GB LPDDR5 RAM with a
+peak bandwidth of 68 GB/s. It uses an ARM Cortex-A78AE
+CPU, which contains 6 cores running at 1.5 GHz. It uses the
+Nvidia Tegra Orin GPU, based on Ampere architecture with
+1024 CUDA cores and 32 Tensor cores. It is capable of up to 40
+INT8 Sparse TOPs and 20 INT8 Dense TOPs. It has 2 Power
+Operating modes 7W or 15W. This run was conducted in the
+15W mode. Sensors and actuators signals are scaled with factor
+to covert the signals from 4−20 mA to 0−100% using factors. In
+this case, the control weights and error weights in NMPC are
+updated automatically based on the actor and critic feed-forward
+neural networks. It was observed that the control signal was
+smooth with the RL-NMPC, further the Tr can be made track
+closer to the temperature profile by adjusting the number of
+neurons and layers in the Actor and CRN in near future. It is also
+30876
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+observed for one sample of closed loop iteration it takes 165 ms
+approximately using the Jetson Orin 8GB board.
+Machine learning layers are being integrated into industrial
+applications, where Jetson technology can be substituted with
+Digital Twin concepts utilizing cloud-based cyber-physical
+systems. Gateway-based data acquisition systems can be utilized
+in real-world plants instead of wireless sensors and actuators,
+owing to concerns around cyber-attacks.
+RL-based NMPC, especially with an Actor-Critic framework,
+has the potential to improve real-time computational efficiency
+by shifting optimization to an offline learning phase. However,
+its deployment on low-power industrial hardware such as PLCs
+remains a challenge due to memory and processing constraints.
+Methods such as policy approximation, model compression, and
+hybrid approaches that combine RL-based learning with explicit
+control strategies could help bridge the gap between RL-based
+NMPC and practical industrial implementations.
+
+Engineering, Manipal Institute of Technology, Manipal
+Academy of Higher Education, Manipal 576 104 Karnataka,
+India
+Complete contact information is available at:
+https://pubs.acs.org/10.1021/acsomega.5c03219
+Notes
+
+The proposed controller examined in this study can be
+employed to verify the closed-loop functionality of reinforcement learning utilizing the Digital twin implementation by
+executing in the Azure cloud platform. The computation time in
+Azure platform is very less compared to the execution time in
+Jetson Orin 8GB board. National or International collaborating
+universities can validate their algorithm using Virtual lab access.
+The authors declare no competing financial interest.
+
+■
+
+ACKNOWLEDGMENTS
+The authors express gratitude to Manipal Institute of
+Technology for granting access to research facility for the
+execution of machine learning-based research including
+hardware implementation. Gratitude is extended to Prof. J.
+Prakash, Registrar of Anna University, and Prof. Shreesha C for
+their valuable technical contributions to this paper. Special
+thanks are due to Prof. Sebastien N Gros, NTNU, Norway, and
+Mr. Prajwal J Shettigar, Research Scholar, Indian Institute of
+Technology-Madras for the technical discussion on Reinforcement Learning.
+
+5. CONCLUSIONS
+The major contribution of this paper is the experimental
+validation of the RL-based NMPC with dynamic weight updates
+using the A2C framework via the Jetson Orin 8GB board for
+trajectory tracking. The tracking performance with RL-NMPC
+was more stable, showing no undesired fluctuations compared to
+the results from the RL simulation and experimental tests.
+Additionally, the Python code in Jetson Orin significantly
+reduces the computational time for each iteration of RL-NMPC.
+Jetson Orin implements dynamic weights using an A2C
+network, a feature that sets it apart from all other NMPC
+implementations in the literature. Even better performance is
+expected with sigmoidal weights and its parameter adjustment
+using A2C.
+
+■
+
+■
+
+REFERENCES
+
+(1) Yadav, E. S.; Shettigar J, P.; Poojary, S.; Chokkadi, S.; Jeppu, G.;
+Indiran, T. Data-Driven Modeling of a Pilot Plant Batch Reactor and
+Validation of a Nonlinear Model Predictive Controller for Dynamic
+Temperature Profile Tracking. ACS Omega 2021, 6 (26), 16714−
+16721.
+(2) Oh, D. H.; Adams, D.; Vo, N. D.; Gbadago, D. Q.; Lee, C. H.; Oh,
+M. Actor-critic reinforcement learning to estimate the optimal
+operating conditions of the hydrocracking process. Comput. Chem.
+Eng. 2021, 149, No. 107280.
+(3) de, R.; Faria, R.; Capron, B. D. O.; Secchi, A. R.; de Souza, M. B.
+Where Reinforcement Learning Meets Process Control: Review and
+Guidelines. Processes 2022, 10 (11), No. 2311.
+(4) Yoo, H.; Byun, H. E.; Han, D.; Lee, J. H. Reinforcement learning
+for batch process control: Review and perspectives. Annu. Rev. Control
+2021, 52, 108−119.
+(5) Rawlings, J. B.; Mayne, D. Q.; Diehl, M. Model Predictive Control:
+Theory, Computation, and Design; Nob Hill Publishing, LLC., 2022.
+(6) Patel, R.; Bhartiya, S.; Gudi, R. Model Predictive Control using
+Physics Informed Neural Networks for Process Systems. IFACPapersOnLine 2024, 58 (14), 778−783.
+(7) Adhau, S.; Gros, S.; Skogestad, S. Reinforcement learning based
+MPC with neural dynamical models. Eur. J. Control 2024, 80,
+No. 101048.
+(8) Wang, X. F.; Jiang, J.; Chen, W. H. High-Level Decision Making in
+a Hierarchical Control Framework: Integrating HMDP and MPC for
+Autonomous Systems. IEEE Trans. Cybernetics 2025, 55 (4), 1903−
+1916.
+(9) Humayoo, M.; Zheng, G.; Dong, X.; et al. Relative importance
+sampling for off-policy actor-critic in deep reinforcement learning. Sci.
+Rep 2025, 15, No. 14349.
+(10) Reinforcement Learning with MATLAB. https://in.mathworks.
+com/content/dam/mathworks/ebook/gated/reinforcement-learningebook-all-chapters.pdf. Pages 1−89.
+(11) Sutton, R. S.; Barto, A. G. Reinforcement Learning An Introduction,
+2nd ed.; The MIT Press: Cambridge, Massachusetts, London, England,
+2015.
+
+ASSOCIATED CONTENT
+
+Data Availability Statement
+
+The open experimental data used for the modeling of batch
+reactor are made available under the download section of
+https://itarasu.com.
+
+■
+
+Article
+
+AUTHOR INFORMATION
+
+Corresponding Authors
+
+Thirunavukkarasu Indiran − Machine Learning for Advanced
+Process Control Lab, Department of Instrumentation and
+Control Engineering, Manipal Institute of Technology,
+Manipal Academy of Higher Education, Manipal 576 104
+Karnataka, India; orcid.org/0000-0002-1829-7362;
+Phone: +91 9740731983; Email: it.arasu@manipal.edu
+Arockiaraj Simiyon − Manipal School of Information Science,
+Manipal Academy of Higher Education, Manipal 576 104
+Karnataka, India; Phone: +91 9901035900; Email: araj.s@
+manipal.edu
+Authors
+
+Aishwarya Selvamurugan − Department of Computer Science
+Engineering, Sri Eshwar College of Engineering, Coimbatore
+641202 Tamil Nadu, India
+Aromal Vinod Kumar − Machine Learning for Advanced
+Process Control Lab, Department of Instrumentation and
+Control Engineering, Manipal Institute of Technology,
+Manipal Academy of Higher Education, Manipal 576 104
+Karnataka, India
+Hrishikesh R. Palan − Machine Learning for Advanced Process
+Control Lab, Department of Instrumentation and Control
+30877
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+ACS Omega
+
+http://pubs.acs.org/journal/acsodf
+
+(12) Liang, H.; Xie, J.; Huang, B.; Li, Y.; Sun, B.; Yang, C. A novel
+sim2real reinforcement learning algorithm for process control. Reliab.
+Eng. Syst. Saf. 2025, 254, No. 110639.
+(13) Nian, R.; Liu, J.; Huang, B. A review On reinforcement learning:
+Introduction and applications in industrial process control. Comput.
+Chem. Eng. 2020, 139, No. 106886.
+(14) Lin, M.; Sun, Z.; Xia, Y.; Zhang, J. Reinforcement Learning-Based
+Model Predictive Control for Discrete-Time Systems. IEEE Trans. on
+Neural Networks Learn. Syst. 2024, 35 (3), 3312−3324.
+(15) Pan, X.; Chen, X.; Zhang, Q.; Li, N. Model Predictive Control: A
+Reinforcement Learning-based Approach. J. Phys.:Conf. Ser. 2022,
+2203, No. 012058.
+(16) Kordabad, A. B.; Reinhardt, D.; Anand, A. S.; Gros, S.
+Reinforcement Learning for MPC: Fundamentals and Current
+Challenges. IFAC-PapersOnLine 2023, 56, 5773−5780.
+(17) Kordabad, A. B.; Zanon, M.; Gros, S. Equivalence of Optimality
+Criteria for Markov Decision Process and Model Predictive Control.
+IEEE Trans. Autom. Control 2024, 69 (2), 1149−1156.
+(18) Buşoniu, L.; de Bruin, T.; Tolić, D.; Kober, J.; Palunko, I.
+Reinforcement learning for control: Performance, stability, and deep
+approximators. Annu. Rev. Control 2018, 46, 8−28.
+(19) Romero, A.; Song, Y.; Scaramuzza, D. In Actor-Critic Model
+Predictive Control, Proceedings�IEEE International Conference on
+Robotics and Automation; Institute of Electrical and Electronics
+Engineers Inc., 2024; pp 14777−14784.
+(20) Zamfirache, I. A.; Precup, R. E.; Roman, R. C.; Petriu, E. M.
+Neural Network-based control using Actor-Critic Reinforcement
+Learning and Grey Wolf Optimizer with experimental servo system
+validation. Expert Syst. Appl. 2023, 225, No. 120112.
+(21) Gerpott, F. T.; Lang, S.; Reggelin, T.; Zadek, H.; Chaopaisarn, P.;
+Ramingwong, S. Integration of the A2C Algorithm for Production
+Scheduling in a Two-Stage Hybrid Flow Shop Environment. Procedia
+Comput. Sci. 2022, 200, 585−594.
+(22) Romero, A.; Aljalbout, E.; Song, Y.; Scaramuzza, D. Actor-Critic
+Model Predictive Control: Differentiable Optimization meets Reinforcement Learning. 2023 .
+(23) Medina-Ramos, C.; Nieto-Chaupis, H. In Controlling the
+Temperature of a Batch Reactor through a NMPC Scheme Based on the
+Laguerre-Volterra Model, IEEE/IAS International Conference on
+Industry Applications�INDUSCON 2010; IEEE, 2010; pp 1−6.
+(24) Hassanpour, H.; Mhaskar, P.; Corbett, B. A practically
+implementable reinforcement learning control approach by leveraging
+offset-free model predictive control. Comput. Chem. Eng. 2024, 181,
+No. 108511.
+(25) Simon, L. L.; Nagy, Z. K.; Hungerbuehler, K. Nonlinear model
+predictive control of an industrial batch reactor subject to swelling
+constraint. IFAC Proc. Vol. 2008, 41 (2), 12177−12182.
+(26) Marquez-Ruiz, A.; Loonen, M.; Saltık, M. B.; Ö zkan, L. Model
+Learning Predictive Control for Batch Processes: A Reactive Batch
+Distillation Column Case Study. Ind. Eng. Chem. Res. 2019, 58 (30),
+13737−13749.
+(27) Zheng, Y.; Wu, Z. Predictive Control of Batch Crystallization
+Process Using Machine Learning. IFAC-PapersOnLine 2022, 55 (7),
+798−803.
+(28) Wong, W. C.; Chee, E.; Li, J.; Wang, X. Recurrent Neural
+Network-Based Model Predictive Control for Continuous Pharmaceutical Manufacturing. Mathematics 2018, 6 (11), No. 242.
+(29) Meng, J.; Li, C.; Tao, J.; et al. RNN-LSTM-Based Model
+Predictive Control for a Corn-to-Sugar Process. Processes 2023, 11,
+No. 1080.
+(30) Wijaya, S.; Heryadi, Y.; Arifin, Y.; Suparta, W.; Lukas. Long shortterm memory (LSTM) model-based reinforcement learning for
+nonlinear mass spring damper system control. Procedia Comput. Sci.
+2023, 216, 213−220.
+(31) Reiter, R.; Ghezzi, A.; Baumgärtner, K.; Hoffmann, J.; McAllister,
+R. D.; Diehl, M. AC4MPC: Actor-Critic Reinforcement Learning for
+Nonlinear Model Predictive Control Systems and Control 2024,
+arXiv:2406.03995. arXiv.org e-Print archive. https://arXiv.org/abs/
+2406.03995.
+
+Article
+
+(32) Sherstinsky, A. Fundamentals of Recurrent Neural Network
+(RNN) and Long Short-Term Memory (LSTM) network. Phys. D
+2020, 404, No. 132306.
+(33) Selvamurugan, A.; Kunnathur Ganesan, P.; Nayak, S. S.; Simiyon,
+A.; Indiran, T. CNN-LSTM-Based Nonlinear Model Predictive
+Controller for Temperature Trajectory Tracking in a Batch Reactor.
+ACS Omega 2024, 9 (47), 47203−47212.
+(34) Grondman, I.; Busoniu, L.; Lopes, G. A. D.; Babuska, R. A Survey
+of Actor-Critic Reinforcement Learning: Standard and Natural Policy
+Gradients. IEEE Trans. Syst. Man, Cybernetics 2012, 42 (6), 1291−
+1307.
+(35) Rawlings, J. B.; Mayne, D. Q. Model Predictive Control: Theory
+and Design, 1st ed.; Nob Hill Publishing, LLC, 2009.
+(36) Andersson, J. A. E.; Gillis, J.; Horn, G.; Rawlings, J. B.; Diehl, M.
+CasADi: a software framework for nonlinear optimization and optimal
+control. Math. Program. Comput. 2019, 11 (1), 1−36.
+(37) Yu, D.; Deng, L.; Jang, I.; Kudumakis, P.; Sandler, M.; Kang, K.
+Deep learning and its applications to signal and information processing.
+IEEE Signal Process. Mag. 2011, 28 (1), 145−154.
+(38) Gros, S.; Zanon, M. Data-driven economic NMPC using
+reinforcement learning. IRE Trans. Autom. Control 2020, 65 (2), 636−
+648.
+(39) Salzmann, T.; Kaufmann, E.; Arrizabalaga, J.; Pavone, M.;
+Scaramuzza, D.; Ryll, M.; Salzmann, T. Real-Time Neural MPC: Deep
+Learning Model Predictive Control for Quadrotors and Agile Robotic
+Platforms. IEEE Rob. Auto. Lett. 2023, 8 (4), 2397−2404.
+(40) Singh, R.; Nataraj, P. S. V.; Maity, A. Nonlinear Control of a Gas
+Turbine Engine with Reinforcement Learning. In Proceedings of the
+Future Technologies Conference (FTC) 2021; Springer Nature Link, 2021
+https://link.springer.com/Chapter/10.1007/978-3-030-89880-9_8.
+pp 105−120.
+(41) Shettigar, J. P.; Pai, A.; Joshi, Y.; Indiran, T.; Chokkadi, S.
+Validation of Nonlinear PID Controllers on a Lab-Scale Batch Reactor.
+In Communications in Computer and Information Science; Springer
+Nature, 2023; pp 47−59.
+
+30878
+
+https://doi.org/10.1021/acsomega.5c03219
+ACS Omega 2025, 10, 30864−30878
+
+

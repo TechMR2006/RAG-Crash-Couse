@@ -1,0 +1,3361 @@
+Available online at www.sciencedirect.com
+
+ScienceDirect
+IFAC PapersOnLine 57-1 (2024) 304–308
+Comparison
+of
+Reinforcement
+Learning
+and
+Comparison
+of
+Reinforcement
+Learning
+and
+Comparison
+of
+Reinforcement
+Learning
+and
+Comparison
+of Reinforcement
+Learning
+and
+Model
+Predictive
+Control
+for
+a
+Nonlinear
+Model
+Predictive
+Control
+for
+a
+Nonlinear
+Comparison
+of
+Reinforcement
+Learning
+and
+Model
+Predictive
+Control
+for
+a
+Nonlinear
+Continuous
+Process
+Model Predictive
+Control
+for
+a
+Nonlinear
+Continuous
+Process
+Model Predictive
+Control
+for a Nonlinear
+Continuous
+Process
+Continuous
+Process
+Vikas Rajpoot,
+Sudhakar
+Munusamy,
+Joshi,
+Continuous
+ProcessTanuja
+Vikas Rajpoot,
+Sudhakar Munusamy,
+Tanuja Joshi,
+
+DineshSudhakar
+Patil, Vivek
+Pinnamaraju
+Vikas
+Munusamy,
+Vikas Rajpoot,
+Rajpoot,
+Sudhakar
+Munusamy, Tanuja
+Tanuja Joshi,
+Joshi,
+Dinesh
+Dinesh Patil,
+Patil, Vivek
+Vivek Pinnamaraju
+Pinnamaraju
+Vikas Rajpoot,
+Munusamy,
+Tanuja Joshi,
+DineshSudhakar
+Patil, Vivek
+Pinnamaraju
+ABB Corporate Research, India
+Dinesh
+Patil,
+Vivek
+Pinnamaraju
+ABB
+Corporate
+Research,
+(Corresponding
+author
+: sudhakar.munusamy@in.abb.com)
+ABB
+Corporate
+Research, India
+India
+ABB
+Corporate
+Research,
+India
+(Corresponding
+author
+:
+sudhakar.munusamy@in.abb.com)
+(Corresponding author
+author :: sudhakar.munusamy@in.abb.com)
+sudhakar.munusamy@in.abb.com)
+(Corresponding
+ABB Corporate Research, India
+Abstract: Model (Corresponding
+Predictive Control
+(MPC)
+has seen tremendous success in control of industrial
+author
+: sudhakar.munusamy@in.abb.com)
+Abstract:
+Model
+Predictive
+Control
+(MPC)
+has seen
+seen
+tremendous
+success in(MIMO)
+control ofsystems
+industrial
+processes due
+to its
+ability toControl
+effectively
+handle
+multi-input
+multi-output
+in
+Abstract:
+Model
+Predictive
+(MPC)
+has
+tremendous
+success
+control
+industrial
+Abstract:
+Model
+Predictive
+Control
+(MPC)
+has seen
+tremendous
+success in
+in(MIMO)
+control of
+ofsystems
+industrial
+processes
+due
+to
+its
+ability
+to
+effectively
+handle
+multi-input
+multi-output
+in
+the presence
+oftoprocess
+constraints.
+Effective
+control
+of nonlinear
+processes(MIMO)
+operated
+at wider
+processes
+due
+its
+ability
+to
+effectively
+handle
+multi-input
+multi-output
+systems
+in
+processes
+due
+toprocess
+its
+ability
+toControl
+effectively
+handle
+multi-input
+multi-output
+(MIMO)
+systems
+in
+Abstract:
+Model
+Predictive
+(MPC)
+has
+seen
+tremendous
+success
+in
+control
+of
+industrial
+the
+presence
+of
+constraints.
+Effective
+control
+of
+nonlinear
+processes
+operated
+at
+wider
+operating
+regimes
+often requires
+either
+use of multiple
+linear
+modelsprocesses
+or a nonlinear
+model
+the
+the
+presence
+of process
+process
+constraints.
+Effective
+control of
+nonlinear
+operated
+at in
+wider
+the
+presence
+of
+constraints.
+Effective
+control
+processes
+due
+to
+its
+ability
+to
+effectively
+handle
+multi-input
+multi-output
+(MIMO)
+systems
+in
+of
+nonlinear
+processes
+operated
+at
+wider
+operating
+regimes
+often
+requires
+either
+use
+of
+multiple
+linear
+models
+or
+a
+nonlinear
+model
+in
+the
+MPC framework.
+theoretically
+this
+in improved
+performance
+compared
+to in
+linear
+operating
+regimesWhile
+often requires
+requires
+either
+usecan
+of result
+multiple
+linear models
+models
+or aa nonlinear
+nonlinear
+model
+the
+operating
+regimes
+often
+either
+use
+of
+multiple
+linear
+or
+model
+the
+the
+presence
+of process
+constraints.
+Effective
+control
+of
+nonlinear
+processes
+operated
+at
+wider
+MPC
+framework.
+While
+theoretically
+this
+can
+result
+in
+improved
+performance
+compared
+to in
+linear
+,framework.
+it suffers
+from
+additional
+complexities
+such in
+as improved
+model
+switch
+scheduling,
+computational
+MPC
+While
+theoretically
+this
+can
+result
+performance
+compared
+to
+linear
+MPC
+framework.
+While
+theoretically
+this
+can
+result
+in
+improved
+performance
+compared
+to
+linear
+operating
+regimes
+often
+requires
+either
+use
+multiple
+or
+a nonlinear
+model in(RL)
+the
+, it
+it suffers
+suffers
+from
+additional
+complexities
+suchoptimum.
+as linear
+modelmodels
+switch
+scheduling,
+computational
+complexity,
+and convergence
+of solution
+to of
+a local
+The
+Reinforcement
+Learning
+MPC,
+from
+additional
+complexities
+such
+as
+model
+switch
+scheduling,
+computational
+MPC,
+it suffers
+from
+additional
+complexities
+such
+as
+model
+switch
+scheduling,
+framework.
+While
+theoretically
+this
+can
+result
+in
+improved
+performance
+compared
+to
+linear
+computational
+complexity,
+and
+convergence
+of
+solution
+to
+a
+local
+optimum.
+The
+Reinforcement
+Learning
+(RL)
+framework for
+control,
+which directly
+learns
+control
+policyThe
+by interacting
+with Learning
+the underlying
+complexity,
+and
+convergence
+of solution
+solution
+to aathe
+local
+optimum.
+Reinforcement
+(RL)
+complexity,
+and
+convergence
+of
+to
+local
+optimum.
+Reinforcement
+Learning
+(RL)
+MPC,
+from
+additional
+complexities
+such
+model
+switch
+scheduling,
+computational
+framework
+for
+control,
+which
+directly
+learns
+the
+control
+policyThe
+by
+interacting
+with
+the
+underlying
+process,it issuffers
+gaining
+growing
+interest,
+and
+is known
+toas
+overcome
+the
+challenges
+faced
+byunderlying
+nonlinear
+framework
+for
+control,
+which
+directly
+learns
+the
+control
+policy
+by
+interacting
+with
+the
+framework
+for
+control,
+complexity,
+and
+convergence
+of solution
+to known
+athe
+local
+ptimum.
+The
+Reinforcement
+Learning
+(RL)
+which
+directly
+learns
+control
+policy
+by
+interacting
+the
+underlying
+process,
+is achieve
+gaining
+growing
+interest,
+and
+is
+to
+overcome
+the
+challengeswith
+faced
+by
+nonlinear
+MPC andis
+superior
+controller
+performance,
+with
+adequate
+exploration
+during
+training.
+In
+process,
+gaining
+growing
+interest,
+and
+is
+known to
+to
+overcome
+the
+challenges
+faced
+by
+nonlinear
+process,
+is achieve
+gaining
+growing
+interest,
+and
+is
+known
+overcome
+the
+challenges
+faced
+by
+nonlinear
+framework
+for
+control,
+which
+directly
+learns
+the
+control
+policy
+by
+interacting
+with
+the
+underlying
+MPC
+and
+superior
+controller
+performance,
+with
+adequate
+exploration
+during
+training.
+In
+this work,
+we carry
+out a comparative
+analysis between
+RL and nonlinear
+MPC
+for training.
+a nonlinear
+MPC
+and
+achieve
+superior
+controller
+performance,
+with
+adequate
+exploration
+during
+In
+MPC
+andis achieve
+superior
+controller
+performance,
+with
+adequate
+exploration
+during
+training.
+In
+process,
+gaining
+growing
+interest,
+and
+is
+known
+to
+overcome
+the
+challenges
+faced
+by
+nonlinear
+this
+work,
+we
+carry
+out
+a
+comparative
+analysis
+between
+RL
+and
+nonlinear
+MPC
+for
+a
+chemical
+process
+- aout
+Continuous
+Timeanalysis
+Stirred between
+Reactor (CSTR).
+Simulation
+studies
+reveal
+the
+this
+work,
+we
+carry
+a
+comparative
+RL
+and
+nonlinear
+MPC
+for
+a
+nonlinear
+this
+work,
+we carry
+a comparative
+analysis
+between
+RL and nonlinear
+MPC
+for training.
+a reveal
+nonlinear
+MPC
+andperformance
+achieve
+controller
+performance,
+with adequate
+exploration
+during
+In
+chemical
+process
+-superior
+aout
+Continuous
+Time
+Stirred
+Reactor
+(CSTR).
+Simulation
+studies
+the
+superior
+of RL,
+attributed
+to its resolution
+of an infinite-horizon
+control
+problem,
+chemical
+process
+Continuous
+Time
+Stirred
+Reactor
+(CSTR).
+Simulation
+studies
+reveal
+the
+chemical
+process
+-- aaout
+Continuous
+Time
+Stirred
+Reactor
+(CSTR).
+Simulation
+studies
+reveal
+the
+this
+work,
+we
+carry
+a
+comparative
+analysis
+between
+RL
+and
+nonlinear
+MPC
+for
+a
+nonlinear
+superior
+performance
+of
+RL,
+attributed
+to
+its
+resolution
+of
+an
+infinite-horizon
+control
+problem,
+in contrast
+to MPC, which
+tackles
+finite-horizon
+optimization.
+superior
+performance
+of
+attributed
+to
+of
+control
+problem,
+superior
+performance
+of RL,
+RL,tackles
+attributed
+to its
+its resolution
+resolution
+of an
+an infinite-horizon
+infinite-horizon
+controlreveal
+problem,
+chemical
+process
+- a which
+Continuous
+Time
+Stirred
+Reactor
+(CSTR).
+Simulation studies
+the
+in contrast
+contrast
+to MPC,
+MPC,
+finite-horizon
+optimization.
+in
+to
+which
+tackles
+finite-horizon
+optimization.
+Copyright
+©to2024
+The which
+Authors.
+This isfinite-horizon
+an open
+access
+article under
+CC BY-NC-ND control
+license problem,
+in
+contrast
+MPC,
+optimization.
+superior
+performance
+of RL,tackles
+attributed
+to its
+resolution
+of anthe
+infinite-horizon
+Keywords:
+Model predictive
+control, Nonlinear process, DDPG
+(https://creativecommons.org/licenses/by-nc-nd/4.0/)
+in
+contrast Reinforcement
+to MPC, whichlearning,
+tackles finite-horizon
+optimization.
+Keywords:
+Reinforcement
+learning,
+Model predictive
+predictive
+control, Nonlinear process,
+process, DDPG
+Keywords:
+Reinforcement
+learning,
+Model
+control,
+Keywords: Reinforcement learning, Model predictive control, Nonlinear
+Nonlinear process, DDPG
+DDPG
+1. INTRODUCTION
+nonlinear
+MPC
+due to process,
+solving DDPG
+a nonconvex optimization
+Keywords:
+Reinforcement
+learning,
+Model
+predictive
+control,
+Nonlinear
+1. INTRODUCTION
+INTRODUCTION
+nonlinear
+MPC
+due
+to solving
+solving
+a nonconvex
+nonconvex
+optimization
+problem can
+alsodue
+be avoided
+by an
+RL agent with
+adequate
+1.
+nonlinear
+MPC
+to
+a
+optimization
+1. INTRODUCTION
+nonlinear
+MPC
+due
+to solving
+nonconvex
+optimization
+a
+problem
+can
+also
+be
+avoided
+by
+an
+RL
+agent
+with
+adequate
+exploration
+during
+training.
+problem
+can
+also
+be
+avoided
+by
+an
+RL
+agent
+with
+adequate
+The widespread adoption
+of MPC in industrial process problem
+can
+alsodue
+betraining.
+avoided
+by an
+RL agent with
+adequate
+1. INTRODUCTION
+nonlinear
+MPC
+to solving
+a nonconvex
+optimization
+exploration
+during
+The
+widespread
+adoption
+of
+MPC
+in
+industrial
+process
+exploration
+during
+training.
+control
+is attributed
+to its of
+remarkable
+deal- exploration
+The
+widespread
+adoption
+MPC in
+in capability
+industrial in
+process
+during
+In most of
+the
+chemical
+processes
+action
+problem
+can
+also
+betraining.
+avoided
+by an in
+RLindustries,
+agent withthe
+adequate
+The
+widespread
+adoption
+MPC
+industrial
+process
+control
+is multi-input
+attributed
+tomulti-output
+its of
+remarkable
+capability
+in
+dealIn
+most
+of
+the
+chemical
+processes
+incontinuous;
+industries, necessitatthe action
+action
+ing withis
+(MIMO)
+systems
+in In
+control
+attributed
+to
+its
+remarkable
+capability
+in
+dealspace
+and
+state
+space
+are
+generally
+exploration
+during
+training.
+most
+of
+the
+chemical
+processes
+in
+industries,
+the
+control
+is
+attributed
+to
+its
+remarkable
+capability
+in
+dealThe
+widespread
+adoption
+of MPC Although
+in
+industrial
+process
+ing
+with
+multi-input
+multi-output
+(MIMO)
+systems
+in
+most
+of state
+the chemical
+processes
+incontinuous;
+industries, necessitatthe action
+space
+and
+space
+are
+generally
+the presence
+of process
+constraints.
+majority
+of In
+ing
+with
+multi-input
+multi-output
+(MIMO)
+systems
+in
+ing theand
+usestate
+of function
+approximators
+in conjunction
+with
+space
+space are
+are
+generally continuous;
+continuous;
+necessitating
+withis multi-input
+(MIMO)
+systems
+in
+control
+attributed
+tomulti-output
+its
+remarkable
+capability
+incan
+dealthe
+presence
+of process
+process
+constraints.
+Although
+majority
+of space
+space
+generally
+necessitatIn
+most
+of state
+the
+chemical
+processes
+in learn
+industries,
+the action
+ing
+theand
+use
+of function
+function
+approximators
+in conjunction
+conjunction
+with
+industrial
+processes
+are
+inherently
+nonlinear,
+they
+be
+the
+presence
+of
+constraints.
+Although
+majority
+of
+reinforcement
+learning
+to
+effectively
+the relationship
+ing
+the
+use
+of
+approximators
+in
+with
+the
+presence
+Although
+majority
+of
+ing
+with
+multi-input
+multi-output
+(MIMO)
+systems
+in
+of
+process
+constraints.
+industrial
+processes
+are
+inherently
+nonlinear,
+they
+can
+be
+ing
+the
+use
+of
+function
+approximators
+in
+conjunction
+with
+space
+and
+state
+space
+are
+generally
+continuous;
+necessitatreinforcement
+learning
+to
+effectively
+learn
+the
+relationship
+well
+approximated
+using
+linear
+dynamical
+models
+and
+a
+industrial processes
+processes are
+are inherently
+inherently nonlinear,
+nonlinear, they
+they can
+can be
+be reinforcement
+between the continuous
+variables.
+The
+Deep
+Deterministic
+learning to
+effectively
+learn
+the
+relationship
+industrial
+the
+presence
+of process
+Although
+majority
+well
+approximated
+usingconstraints.
+linear
+dynamical
+models
+and ofaa reinforcement
+learning
+to
+effectively
+learn
+theDeterministic
+relationship
+ing
+theGradient
+use
+function
+approximators
+in
+conjunction
+with
+between
+theofcontinuous
+continuous
+variables.
+The
+Deep
+linear
+MPC framework
+islinear
+generally
+sufficient
+to achieve
+well
+approximated
+using
+dynamical
+models
+and
+Policy
+(DDPG)
+is
+one
+of
+the
+well-known
+actorbetween
+the
+variables.
+The
+Deep
+Deterministic
+well
+approximated
+using
+linear
+dynamical
+models
+and
+a
+industrial
+processes
+are
+inherently
+nonlinear,
+they
+can
+be
+linear
+MPC
+framework
+is
+generally
+sufficient
+to
+achieve
+between
+the
+continuous
+variables.
+The
+Deep
+Deterministic
+reinforcement
+learning
+to
+effectively
+learn
+the
+relationship
+Policy
+Gradient
+(DDPG)
+is
+one
+of
+the
+well-known
+actordesiredMPC
+closedframework
+loop performance.
+However,
+in certain
+appli- Policy
+linear
+is
+generally
+sufficient
+to
+achieve
+critic RL
+algorithms
+whichis is
+well
+for systems
+inGradient
+(DDPG)
+one
+of suited
+the well-known
+well-known
+actorlinear
+MPC
+framework
+islinear
+generally
+sufficient
+to achieve
+well
+approximated
+using
+dynamical
+and
+desired
+closed
+loop
+performance.
+However,
+inofmodels
+certain
+appli-a Policy
+Gradient
+(DDPG)
+is is
+one
+of
+the
+between
+the
+continuous
+variables.
+The
+Deepfor
+Deterministic
+actorcritic
+RL
+algorithms
+which
+well
+suited
+systems
+incations
+where loop
+thereperformance.
+is significant
+presencein
+nonlinearity
+desired
+closed
+However,
+certain
+applivolvingRL
+continuous
+state
+and is
+action
+spaces.
+This
+algorithm
+critic
+algorithms
+which
+well
+suited
+for
+ystems
+indesired
+closed
+loop
+performance.
+However,
+inofcertain
+applilinear
+MPC
+framework
+is
+generally
+sufficient
+to
+achieve
+cations
+where
+there
+is
+significant
+presence
+nonlinearity
+critic
+RL
+algorithms
+which
+is
+well
+suited
+for
+ystems
+inPolicy
+Gradient
+(DDPG)
+is
+one
+of
+the
+well-known
+actorvolving
+continuous
+state
+and
+action
+spaces.
+This
+algorithm
+or
+requirement
+to
+operate
+at
+wider
+operating
+regimes,
+the
+cations where
+where there
+there is
+is significant
+significant presence
+presence of
+of nonlinearity
+nonlinearity volving
+has beencontinuous
+extensively
+explored
+in chemical
+control
+state
+and action
+action
+spaces. process
+This algorithm
+algorithm
+cations
+desired
+closed
+loop
+performance.
+However,
+in often
+certain
+applior
+requirement
+to operate
+operate
+at wider
+wider
+operating
+regimes,
+the volving
+continuous
+state
+and
+spaces.
+This
+critic
+RL
+algorithms
+which
+is Yoo
+well
+suited
+for
+ystems
+inhas
+been
+extensively
+explored
+in
+chemical
+process
+control
+controller
+performance
+using
+linear
+MPC is
+unsatisor
+requirement
+to
+at
+operating
+regimes,
+the
+applications
+(9).
+For
+instance,
+et.
+al.
+(11)
+proposed
+an
+has
+been
+extensively
+explored
+in
+chemical
+process
+control
+or
+requirement
+to
+operate
+at
+wider
+operating
+regimes,
+the
+cations
+there is significant
+presence
+ofoften
+nonlinearity
+controller
+performance
+using
+linear
+MPC
+ismultiple
+unsatisbeencontinuous
+extensively
+explored
+in chemical
+process
+control
+volving
+state
+and
+action
+spaces.
+This
+algorithm
+applications
+(9).
+For
+instance,
+Yoo
+et.
+al.
+(11)
+proposed
+an
+factory where
+and
+necessitates
+the use
+of
+eitheris
+linear has
+controller
+performance
+using
+linear
+MPC
+often
+unsatisRL-based
+controller
+for
+batch
+polymerization
+control,
+utiapplications
+(9).
+For
+instance,
+Yoo
+et.
+al.
+(11)
+proposed
+an
+controller
+performance
+using
+linear
+MPC
+is
+often
+unsatisor
+requirement
+to
+operate
+at
+wider
+operating
+regimes,
+the
+factory
+and
+necessitates
+the use
+useinof
+of the
+either
+multiple
+linear applications
+(9). For for
+instance,
+Yoo
+et. al. (11)
+proposed
+an
+has
+been
+extensively
+explored
+in chemical
+process
+control
+RL-based
+controller
+batch
+polymerization
+control,
+utimodels and
+or anecessitates
+nonlinear model
+MPC
+framework.
+factory
+the
+either
+multiple
+linear
+lizing
+a
+Monte
+Carlo-DDPG
+approach
+along
+with
+imitation
+RL-based controller
+controller for
+for batch
+batch polymerization
+polymerization control,
+control, utiutifactory
+controller
+using
+linear
+MPC
+is
+often
+unsatisand
+the
+use
+either
+multiple
+linear RL-based
+models
+orperformance
+anecessitates
+nonlinear
+model
+inof the
+the
+MPC
+framework.
+applications
+Fortraining.
+instance,
+Yooproposed
+et. along
+al. (11)
+proposed
+an
+lizing
+Monte
+Carlo-DDPG
+approach
+with
+imitation
+This introduces
+additional
+challenges
+such
+as
+model
+switch
+models
+or
+nonlinear
+model
+in
+MPC
+framework.
+learning,
+for (9).
+agent
+The
+RL
+algorithm
+lizing
+a Monte
+Carlo-DDPG
+approach
+along
+with
+imitation
+models
+or
+aanecessitates
+nonlinear
+model
+factory
+and
+the
+use
+of
+either
+multiple
+linear
+in
+the
+MPC
+framework.
+This
+introduces
+additional
+challenges
+such
+as
+model
+switch
+lizing
+a
+Monte
+Carlo-DDPG
+approach
+along
+with
+imitation
+RL-based
+controller
+for
+batch
+polymerization
+control,
+utilearning,
+for
+agent
+training.
+The
+proposed
+RL
+algorithm
+scheduling,
+increased
+computational
+complexity
+and
+con- learning,
+This
+introduces
+additional
+challenges
+such
+as
+model
+switch
+outperformed
+MPC,training.
+satisfying
+path and
+point
+for agent
+agent
+Theboth
+proposed
+RL end
+algorithm
+This
+introduces
+additional
+challenges
+such
+as model
+switch
+models
+nonlinear
+model
+the
+MPC
+framework.
+scheduling,
+increased
+computational
+complexity
+and
+con- learning,
+for
+training.
+The
+proposed
+RL
+algorithm
+lizing
+a Monte
+Carlo-DDPG
+approach
+along
+with
+imitation
+outperformed
+MPC,
+satisfying
+both
+path
+and
+end
+point
+vergenceorof aincreased
+MPC
+solutions
+to a in
+local
+optimum.
+scheduling,
+computational
+complexity
+and
+conconstraints.
+Ma
+et
+al.
+(12)
+developed
+a
+DDPG-based
+conoutperformed
+MPC,
+satisfying
+both
+path
+and
+end
+point
+scheduling,
+increased
+computational
+complexity
+and
+conThis
+introduces
+additional
+challenges
+such
+as
+model
+switch
+vergence of
+of MPC
+MPC solutions
+solutions to
+to aa local
+local optimum.
+optimum.
+outperformed
+MPC,
+satisfying
+path
+and
+point
+learning,
+for
+agent
+training.
+Theboth
+proposed
+RL end
+algorithm
+constraints.
+Ma
+et
+al.
+(12)
+developed
+a
+DDPG-based
+convergence
+troller
+for
+a
+nonlinear
+semi-batch
+polymerization
+process
+constraints. Ma
+Ma et
+et al.
+al. (12)
+(12) developed
+developed aa DDPG-based
+DDPG-based conconvergence
+of increased
+MPClearning
+solutions
+Reinforcement
+is toana local
+emerging
+technique
+for constraints.
+scheduling,
+computational
+complexity
+and conoptimum.
+outperformed
+MPC,
+satisfying
+both
+path
+and
+end
+point
+troller
+for
+a
+nonlinear
+semi-batch
+polymerization
+process
+Reinforcement
+learning
+is to
+ana local
+emerging
+technique
+for troller
+and theforperformance
+is seen to be
+comparable process
+with a
+nonlinear semi-batch
+semi-batch
+polymerization
+decision-making,
+where
+anis
+agent
+learns
+to technique
+make optimal
+vergence
+of MPClearning
+solutions
+optimum.
+Reinforcement
+learning
+an
+emerging
+for
+aa Ma
+nonlinear
+polymerization
+process
+constraints.
+et al.control
+(12)
+developed
+acomparable
+DDPG-based
+conand
+theforperformance
+performance
+is seen
+seen
+to be
+be
+with
+Reinforcement
+is agent
+an
+emerging
+technique
+for troller
+decision-making,
+where
+an
+learns
+to
+make
+optimal
+traditional
+advanced
+strategy.
+Petsagkourakis
+et
+al.aa
+and
+the
+is
+to
+comparable
+with
+decisions
+by
+interacting
+with
+a
+process
+and
+receives
+feeddecision-making, where
+where an
+an agent
+agent learns
+learns to
+to make
+make optimal
+optimal and
+theforperformance
+is seen
+to be
+comparable process
+with
+troller
+a
+nonlinear
+semi-batch
+polymerization
+traditional
+advanced
+control
+strategy.
+Petsagkourakis
+et
+al.a
+decision-making,
+Reinforcement
+learning
+is
+an
+emerging
+technique
+for
+decisions
+by
+interacting
+with
+a
+process
+and
+receives
+feed(13) used the
+policy control
+gradientstrategy.
+algorithm
+for batch bioprotraditional
+advanced
+Petsagkourakis
+et al.
+al.
+back in the
+form
+of rewards
+orapenalties
+(4). receives
+RL is gaining
+decisions
+by
+interacting
+with
+process
+and
+feedtraditional
+advanced
+control
+strategy.
+Petsagkourakis
+et
+and
+the
+performance
+is
+seen
+to
+be
+comparable
+with
+a
+(13)
+used
+the
+policy
+gradient
+algorithm
+for
+batch
+bioprodecisions
+decision-making,
+where
+an
+agent
+learns
+to make
+byform
+interacting
+with
+process
+and
+receives
+feedback
+in the
+the
+of
+rewards
+orapenalties
+penalties
+(4).
+RL where
+is optimal
+gaining
+cess having
+mismatch
+utilizing
+the concepts
+(13)
+used the
+theplant-model
+policy gradient
+gradient
+algorithm
+for batch
+batch
+bioprogrowing
+interest
+process
+control
+applications,
+the (13)
+back
+in
+form in
+of
+rewards
+or
+(4).
+RL
+is
+gaining
+used
+policy
+algorithm
+for
+bioprotraditional
+advanced
+control
+strategy.
+Petsagkourakis
+et
+al.
+cess
+having
+plant-model
+mismatch
+utilizing
+the
+concepts
+back
+in
+the
+form
+of
+rewards
+or
+penalties
+(4).
+RL
+is
+gaining
+decisions
+by interacting
+aby
+process
+and by
+receives
+growing
+interest
+in process
+process
+control
+applications,
+wherefeedthe cess
+of transfer
+and obtained
+superior the
+performance
+havinglearning
+plant-model
+mismatcha utilizing
+utilizing
+concepts
+optimal control
+policy
+is with
+learnt
+the
+agent
+interacting
+growing
+interest
+in
+control
+applications,
+where
+the
+having
+plant-model
+mismatch
+the
+concepts
+(13)
+used
+the
+policy
+gradient
+algorithm
+for
+batch
+bioproof
+transfer
+learning
+and
+obtained
+a superior
+superior
+performance
+growing
+interest
+in
+process
+control
+applications,
+where
+back
+in the
+formpolicy
+ofprocess
+rewards
+ora penalties
+(4). by
+RL
+is gaining
+the cess
+optimal
+control
+is
+learnt
+by
+the
+agent
+interacting
+than
+MPC.
+Bao
+et
+al.
+(19)
+proposed
+an
+improved
+DDPG
+of
+transfer
+learning
+and
+obtained
+a
+performance
+with
+the
+real-time
+or
+reliable
+model
+/
+simulator.
+optimal control
+control policy
+policy is
+is learnt by the agent by interacting of
+transfer
+learning
+and(19)
+obtained
+a utilizing
+superior
+performance
+cess
+having
+plant-model
+mismatch
+the
+concepts
+than
+MPC.
+Bao
+et
+al.
+proposed
+an
+improved
+DDPG
+optimal
+growing
+interest
+in
+process
+control
+applications,
+where
+the
+learnt
+by
+the
+agent
+by
+interacting
+with
+the
+real-time
+process
+or
+a
+reliable
+model
+/
+simulator.
+algorithm,
+where
+the
+agent
+performance
+has
+been
+demonthan MPC.
+MPC. Bao
+Bao et
+et al.
+al. (19)
+(19) proposed
+proposed an
+an improved
+improved DDPG
+DDPG
+Oncethe
+the real-time
+RL agent process
+is adequately
+trainedmodel
+and deployed,
+the than
+with
+or
+a
+reliable
+/
+simulator.
+of
+transfer
+learning
+obtained
+athe
+superior
+performance
+algorithm,
+where
+theand
+agent
+performance
+has been
+been
+demonwith
+the
+real-time
+process
+or a by
+reliable
+model
+/interacting
+simulator.
+optimal
+control
+policy
+is
+learnt
+the
+agent
+by
+Once
+the
+RL
+agent
+is
+adequately
+trained
+and
+deployed,
+the
+strated
+on
+a
+nonlinear
+process.
+In
+presence
+of
+process
+algorithm,
+where
+the
+agent
+performance
+has
+demoncontrol
+areismerely
+computed
+simple funcOnce
+theactions
+RL agent
+agent
+adequately
+trainedusing
+and deployed,
+deployed,
+the algorithm,
+the
+performance
+has been
+than
+MPC.
+Bao
+al.agent
+(19)
+proposed
+improved
+DDPG
+strated
+on aawhere
+nonlinear
+process.
+In the
+thean
+presence
+ofisdemonprocess
+Once
+the
+RL
+ismerely
+adequately
+trained
+and
+the
+with
+real-time
+process
+orcomputed
+a reliable
+model
+/ simulator.
+control
+actions
+areand
+using
+simple
+funcnonlinearity,
+theiretproposed
+RL-based
+controller
+shown
+strated
+on
+nonlinear
+process.
+In
+presence
+of
+process
+tionalthe
+evaluations
+thereby
+avoidingusing
+the computationcontrol
+actions
+are
+merely
+computed
+simple
+funcstrated
+on
+awhere
+nonlinear
+process.
+In
+the presence
+of
+process
+algorithm,
+the
+agent
+performance
+has
+been
+demonnonlinearity,
+their
+proposed
+RL-based
+controller
+is
+shown
+control
+actions
+areand
+merely
+computed
+using
+simple funcOnce
+the
+RL
+agent
+is
+adequately
+trained
+and
+deployed,
+the
+tional
+evaluations
+thereby
+avoiding
+the
+computationto
+yield
+stable
+control
+performance
+compared
+to
+linear
+nonlinearity,
+their
+proposed
+RL-based
+controller
+is
+shown
+ally
+complex
+model-based
+receding
+optimization,
+as
+solved
+tional evaluations
+evaluations and
+and thereby
+thereby avoiding
+avoiding the
+the computationcomputation- nonlinearity,
+their
+proposed
+RL-based
+controllerofto
+isprocess
+shown
+strated
+onstable
+nonlinear
+process.
+In theof
+presence
+to
+yield
+control
+performance
+compared
+linear
+tional
+control
+actions
+are
+merely
+computed
+using
+simple
+funcally
+complex
+model-based
+receding
+optimization,
+as
+solved
+MPC.
+For
+a
+comprehensive
+review
+RL
+for
+chemical
+to yield
+yield stable
+stable control
+control performance
+performance compared
+compared to
+to linear
+linear
+in MPC.
+Moreover,
+the sub-optimal
+solutions obtained
+by to
+ally
+complex
+model-based
+receding
+optimization,
+as
+solved
+nonlinearity,
+their
+proposed
+RL-based
+controller
+is
+shown
+MPC.
+For
+a
+comprehensive
+review
+of
+RL
+for
+chemical
+ally
+complex
+model-based
+receding
+optimization,
+as
+solved
+tional
+evaluations
+avoiding
+the computationin MPC.
+MPC.
+Moreover,and
+thethereby
+sub-optimal
+solutions
+obtained by
+by MPC. For a comprehensive review of RL for chemical
+in
+Moreover,
+the
+sub-optimal
+solutions
+obtained
+a comprehensive
+review of
+RL for to
+chemical
+to yieldFor
+stable
+control performance
+compared
+linear
+in
+Moreover,
+the
+sub-optimal
+solutions
+obtained
+by MPC.
+allyMPC.
+complex
+model-based
+receding optimization,
+as solved
+MPC. For a comprehensive review of RL for chemical
+in
+MPC.
+Moreover,
+the
+sub-optimal
+solutions
+obtained
+by
+2405-8963 Copyright © 2024 The Authors. This is an open access article under the CC BY-NC-ND license.
+Peer review under responsibility of International Federation of Automatic Control.
+10.1016/j.ifacol.2024.05.052
+
+Vikas Rajpoot et al. / IFAC PapersOnLine 57-1 (2024) 304–308
+
+process control applications, the reader is encouraged to
+refer to (10), (14), (15), (18), (17) and (20).
+It is evident from the discussed works (11; 12; 13) that
+RL yields superior performance compared to MPC. In
+this work, we carry out a detailed analysis comparing the
+performance of RL with nonlinear MPC for a deterministic
+nonlinear CSTR and attribute the superior performance of
+RL to the fact that it inherently solves an ‘infinite horizon’
+control problem in contrast to MPC, which solves a finitehorizon optimization problem. Further, we also highlight
+the computational advantages of using RL over nonlinear
+MPC, which is especially crucial for applications involving
+fast dynamics.
+2. MATHEMATICAL DESCRIPTION OF A
+NONLINEAR CSTR PROCESS
+A CSTR is a nonlinear chemical process which has been
+extensively used as a benchmark for carrying out control
+performance studies. The schematic of CSTR is shown
+in Fig.1, where there is a continuous inflow of reactants
+which are uniformly mixed to enable the reaction and the
+converted products are continuously withdrawn from the
+vessel. The rate of reaction is maintained by controlling the
+reactor temperature using a jacketed cooling system. The
+following reactions are assumed inside the reactor vessel:
+
+305
+
+The variables and parameters involved in the CSTR
+model are described in Table A.1. The parameter values
+used for simulation are summarized in Table A.2. The
+state vector (x) describing the reactor comprises of x =
+[CA , CB , TR , Tk ] and it is affected by two input variables,
+u = [F, Q̇]. The input-output variables considered for
+control studies are schematically shown in Fig.2. Further,
+the sampling interval considered for both MPC and RL
+simulations is 18 seconds.
+3. RL DESIGN METHODOLOGY FOR CONTROL OF
+CSTR PROCESS
+In this work, the considered control objective is to drive
+any arbitrary initial steady state (x0 ) of CSTR process to
+a desired steady state (xf ) by manipulating the relevant
+input variables (u). The scope of this work is limited to
+nonlinear process behavior and for the sake of simplicity,
+it is assumed that there is no model-plant mismatch and
+unmeasured disturbances in the control studies. Further,
+all the states are assumed to be measured without measurement noise. The considered RL framework employs
+DDPG algorithm and learns the optimal control policy
+by interacting with the CSTR process model. The ActorCritic RL architecture used for the CSTR process control
+is summarized in Fig. 3. The training of DDPG is carried
+
+k
+k
+A −−1→ B −−2→ C
+k
+A −−3→ D
+
+Fig. 1. CSTR process
+
+Fig. 2. Inputs and outputs
+
+The mathematical description of CSTR process using
+material and energy balance equations (3) is shown below:
+dCA
+2
+= F (CA0 − CA ) − k1 CA − k3 CA
+dt
+dCB
+= −F CB + k1 CA − k2 CB
+dt
+2
+k1 CA HR,ab + k2 CB HR,bc + k3 CA
+dTR
+HR,ad
+=
+dt
+(−ρcp )
+F (Tin − TR ) + (Kw AR (TK − TR ))
++
+(ρCp VR )
+dTK
+Q̇ + kw AR (TK − TR )
+=
+dt
+mk C(p,k)
+where,
+
+
+−E(A, ab)
+k1 = k0,ab exp
+T + 273.15
+
+ R
+−E(A, bc)
+k2 = k0,bc exp
+T + 273.15
+
+ R
+− E(A, ad)
+k3 = k0,ad exp
+TR + 273.15
+
+Fig. 3. Actor-Critic framework
+out using a policy gradient approach which updates the
+actor policy in the direction that increases the expected Qvalue. The critic is used to estimate the expected Q-value,
+which is used to calculate the gradient of the policy.The
+actions used by RL are bounded and the corresponding
+range is given in Table A.3. As the objective of RL controller is to track CA , CB , TR and TK to its requested
+reference, the reward function is defined as shown below:
+2
+
+reward = −((CA − CA,ref ) + (CB − CB,ref )
+2
+
+2
+2
+
++ (TR − TR,ref ) + (TK − TK,ref ) )
+In additon, exploration noise is a random perturbation
+which is generally added to the agent’s policy to enable the
+agent to explore in the vicinity of the control problem and
+prevent getting stuck in any potential local minima. For
+the considered CSTR environment, we utilized Gaussian
+noise with zero mean and decaying standard deviation as
+shown below:
+1
+σexploration noise =
+1 + 0.02 ∗ Nepisode
+In addition to four states, integral error of each state,
+i=k
+defined as
+i=0 xi − xref , is also used during training
+
+Vikas Rajpoot et al. / IFAC PapersOnLine 57-1 (2024) 304–308
+
+306
+
+to have a offset-free tracking. Hence, there are overall
+8 observations (4 considered states and 4 corresponding
+integral errors) which are used as a feedback to RL agent
+during training and deployment.
+3.1 RL neural network architecture and training
+The actor network consists of an input layer with 8 nodes,
+which takes in the state information. The input layer is
+connected to a hidden layer with 256 nodes. Finally, there
+is an output layer with 2 nodes, which produces the policy.
+An output size of 2 indicates that the policy returns a 2dimensional action. On the other hand, the critic network
+is responsible for evaluating the quality of the actions
+taken by the actor. It inputs the state and action, which
+means the input layer has a size of 10 (8 for the states
+and 2 for the actions). Similar to the actor network, one
+hidden layer with 256 nodes is chosen in the critic network
+as well. The output layer of the critic network has a single
+node, which represents the estimated value or Q-value for
+the given state-action pair. Each episode of length 500
+samples is used and the total number of episodes (Nepisode )
+considered during exploration is 3000, where the episodic
+reward consistently reached the maximum.
+To visualize and analyze the progression of exploration and
+actor-critic network training, episodic reward is monitored
+as shown in Fig.4. The explored data corresponding to
+first 500 episodes are used to fill the buffer while the
+actual training of actor-critic network started from 501th
+episode. From Fig.4, one can observe the increasing trend
+of the episodic reward and reaches a maximum which is
+close to zero after around 2000 episodes. The various hyper
+parameters used during training are summarized in Table
+A.4.
+
+Fig. 4. Mean episode reward
+4. RESULTS: COMPARISON OF RL AND
+NONLINEAR MPC
+The considered control objective is to drive the CSTR process from an initial steady state of x0 = [1.04, 0.8, 139.1]
+to a final steady state of xsp = [0.7, 0.6, 127.25, 124.39]
+by manipulating the input variables, namely, the inlet
+reactant flow rate (F ) and the cooling rate (Q̇). The
+model considered while training RL and the model used
+in MPC are same as the actual process. Further, there
+is no unmeasured disturbances affecting the process and
+
+hence, it is expected that the closed loop settling time (in
+the presence RL/MPC) is less than the open loop settling
+time, which is around 80 samples.
+MPC (implemented using ’dompc’ package (2)) solves a
+nonlinear finite horizon optimization problem at every
+sampling instant in a receding manner as shown in Eq.1
+with nonlinear CSTR model and input constraints. The
+weights for each of the states are chosen to be W =
+diag([1, 1, 0.001, 0.001]) and the bounds on the inputs are
+provided in the Table A.3. MPC simulations are carried
+out at three different horizon lengths: p = 10, 15 and 20. As
+we consider the deterministic scenario, increase in horizon
+should improve the controller performance. However, this
+immensely increases the on-line computational load of
+nonlinear MPC.
+k+p
+
+min
+(xi − xsp )T W (xi − xsp )
+uk ,uk+1 ,...uk+p−1
+(1)
+i=k+1
+s.t.
+xk+1 = g(xk , uk )
+ulb ≤ uk ≤ uub
+In contrast to MPC, during training, RL learns the infinite horizon version of optimization problem solved by
+MPC. At each episode, for every visited state during the
+transition from x0 to xf , RL calculates the control action
+by maximizing the cumulative sum of defined reward,
+L
+( i=1 rt+i ), also called as return or ‘Q-value’ in the RL
+literature, where L is the episode length. In essence, it
+learns the same optimization problem as defined in Eq.1
+but with horizon size equal to episode length (i.e. p = 500)
+which is much higher than the value used for MPC.
+The critic network part of the RL algorithm learns the
+nonlinear optimization problem using: (a) the feedback
+information such as state and reward from the process (b)
+the injected control action to the process. Once learned,
+critic networks provides the objective function value for
+any given state-action pair. The critic network part of RL
+essentially holds the information about process dynamics
+and control objective. It is to be noted that for the control
+problem involving disturbances, critic additionally learns
+the behavior of future disturbances. In contrast, MPC does
+not have capability to account for information about the
+future disturbances. The actor network part of RL learns
+the solution of the optimization problem present in the
+critic network. At every interaction with the process, the
+actor part of RL uses a gradient algorithm to solve the
+optimization problem from critic and uses the solution to
+learn the nonlinear relation (uk = h(xk )) between state
+and optimal control action. Once learned, actor network
+provides the optimal control action for any given process
+state. Unlike MPC which needs to solve the optimization
+problem online, RL does only the function evaluation of
+actor to provide the solution and hence is computationally
+efficient.
+As evident from the results in Fig 5, RL shows superior
+performance compared to MPC. It is observed that MPC
+exhibits inferior performance at smaller horizon. However,
+with increase in the horizon size, it is observed to gradually shift towards RL performance with the expense of
+computational complexity. Table 1 shows the time taken
+to complete the closed loop simulation for the 500 steps
+and episodic reward (in other words, negative of the MPC
+
+Vikas Rajpoot et al. / IFAC PapersOnLine 57-1 (2024) 304–308
+
+307
+
+Appendix A. CSTR MODEL DESCRIPTION,
+DESCRIPTION OF SYMBOLS AND VALUES OF THE
+PARAMETERS
+Table A.1. Definition of symbols used in the
+CSTR model
+Symbol
+CA
+CB
+TR
+TK
+F
+Q̇
+Ki
+EA,i
+HR,i
+ρ
+Cp
+Cp,k
+AR
+VR
+mk
+Tin
+Kw
+
+Fig. 5. Closed loop simulation for RL, NMPC-P:10,
+NMPC-P:15, NMPC-P:20
+objective function with p = 500). These findings highlights
+the advantages of RL in solving the nonlinear control
+problem efficiently compared to MPC. However, it is to
+be noted that the offline computations are high during RL
+training and there exist no systematic method to decide
+on various hyper parameters and neural network structure.
+On the other hand for MPC, once the model is developed
+it is much easier to formulate the optimization problem.
+Hence, during implementation of a specific control strategy, one has to carefully analyze the merits and demerits
+provided by RL and MPC for a given problem.
+Table 1. Comparison of RL agent with NMPC
+Method
+RL agent
+
+Time in seconds
+0.77
+
+Episodic reward
+-2.5
+
+NMPC-P:10
+
+20.79
+
+-14.42
+
+NMPC-P:15
+
+25.73
+
+-7.12
+
+NMPC-P:20
+
+30.1
+
+-6.49
+
+Table A.2. Summary of CSTR model parameters
+Symbol
+K0,ab
+K0,bc
+K0,ad
+Rgas
+EA,ab
+EA,bc
+EA,ad
+HR,ab
+HR,bc
+HR,ad
+
+Value
+1.287e12 h−1
+1.287e12 h−1
+9.043e9 l/mol.h
+8.3144621e-3
+9758.3 kJ/mol
+9758.3 kJ/mol
+8560.0 kJ/mol
+4.2 kJ/molA
+-11.0 kJ/molB
+-41.85 kJ/molA
+
+Symbol
+Tin
+Kw
+Rou
+Cp
+Cp,k
+AR
+VR
+mk
+CA0
+
+Value
+130.0 ◦ C
+4032.0 kJ/h.m2 .K
+0.9342 kg/l
+3.01 kJ/kg.K
+2.0 kJ/kg.K
+0.215 m2
+10.01 l
+5.0 kg
+5.1 mol/l
+
+Table A.3. Actions and their practical limits
+Action
+F
+
+Description
+Feed flow inside the reactor
+
+Range
+5 ≤ F ≤ 100
+
+Q̇
+
+Heat flow
+
+−8500 ≤ Q̇ ≤ 0
+
+Table A.4. Hyper parameters of DDPG algorithm
+
+5. CONCLUSION
+This work presents a comparative study of RL and nonlinear MPC for control of a nonlinear chemical process both
+from the perspective of control performance as well as computational complexity during the online implementation.
+RL is seen to yield superior performance in both these
+aspects due to the inherent fact that it solves an infinite
+horizon control problem and once trained, the online determination of optimal control actions involves mere simple
+functional evaluations. On contrary, nonlinear MPC solves
+a finite horizon receding nonconvex optimization problem, involving intensive computations. This study does
+not compare the offline efforts involved in realizing these
+controllers such as RL agent training time, development
+of reliable models, MPC design etc. Overall, the results
+show a promising future of RL for optimal control of
+nonlinear continuous chemical processes. This, however,
+depends on significant developments in either ensuring
+availability of reliable process simulators or fast, efficient
+and safe exploration during training on the real process.
+
+Description
+Concentration of component A (mol/l)
+Concentration component B (mol/l)
+Temperature inside the Reactor ◦ C
+Temperature of cooling jacket ◦ C
+Feed Flow inlet line (l/h)
+Heat flow applied to cooling jacket (kJ/h)
+Reaction coefficient (h−1 ), i=1, 2, 3
+Activation Energy i = ab, bc, ad (kJ/mol)
+Reaction ki of enthalpy contribution (kJ/mol)
+Density of material (kg/l)
+Specific Heat capacity (kJ/kg.K)
+Coolant heat capacity kJ/kg.K
+Area of reactor wall (m2 )
+Volume of reactor (l)
+Coolant mass (kg)
+Temp of inflow (◦ C)
+Heat transfer coefficient (kJ/h.m2 .K)
+
+Hyperparameter
+Minibatch size, n
+
+Value
+256
+
+Note
+
+Policy learning rate
+
+3x10−4
+
+Step size for ADAM
+
+Critic learning rate
+
+3x10−4
+
+Step size for ADAM
+
+Target update rate, τ
+
+10−3
+
+Replay memory size, B
+
+105
+
+Reward discount, γ
+
+0.99
+
+warm-up time
+
+25x104
+
+older transitions
+are discarded
+Timesteps until
+training starts
+
+REFERENCES
+[1]
+[2]
+
+Edgar, Thomas F., David M. Himmelblau, and Leon
+S. Lasdon. Optimization of chemical processes. 2001.
+Lucia, Sergio, et al. “Rapid development of modular
+and sustainable nonlinear model predictive control
+solutions.” Control Engineering Practice 60 (2017):
+51-62.
+
+308
+
+[3]
+[4]
+[5]
+
+[6]
+
+[7]
+
+[8]
+
+[9]
+[10]
+
+[11]
+
+[12]
+[13]
+[14]
+
+[15]
+
+[16]
+[17]
+
+[18]
+[19]
+
+Vikas Rajpoot et al. / IFAC PapersOnLine 57-1 (2024) 304–308
+
+Alhazmi, Khalid. Control and Optimization of
+Chemical Reactors with Model-free Deep Reinforcement Learning. Diss. 2020.
+Sutton, Richard S., and Andrew G. Barto. Reinforcement learning: An introduction. MIT press, 2018.
+Hoskins, J. C., and D. M. Himmelblau. “Process control via artificial neural networks and reinforcement
+learning.” Computers & chemical engineering 16.4
+(1992): 241-251.
+Shin, Joohyun, et al. “Reinforcement learning–overview of recent progress and implications for
+process control.” Computers & Chemical Engineering 127 (2019): 282-294.
+Alhazmi, Khalid, and S. Mani Sarathy. “Continuous control of complex chemical reaction network
+with reinforcement learning.” 2020 European Control Conference (ECC). IEEE, 2020.
+Joshi, Tanuja, et al. “Twin actor twin delayed deep
+deterministic policy gradient (TATD3) learning for
+batch process control.” Computers & Chemical Engineering 155 (2021): 107527.
+Lillicrap, Timothy P., et al. “Continuous control
+with deep reinforcement learning.” arXiv preprint
+arXiv:1509.02971 (2015).
+Joshi, Tanuja, et al. “TASAC: A twin-actor reinforcement learning framework with a stochastic policy with an application to batch process control.”
+Control Engineering Practice 134 (2023): 105462.
+Yoo, Haeun, et al. “Reinforcement learning based
+optimal control of batch processes using MonteCarlo deep deterministic policy gradient with phase
+segmentation.” Computers & Chemical Engineering
+144 (2021): 107133.
+Ma, Yan, et al. “Continuous control of a polymerization system with deep reinforcement learning.”
+Journal of Process Control 75 (2019): 40-47.
+Petsagkourakis, Panagiotis, et al. “Reinforcement
+learning for batch bioprocess optimization.” Computers & Chemical Engineering 133 (2020): 106649.
+Nian, Rui, Jinfeng Liu, and Biao Huang. “A review
+on reinforcement learning: Introduction and applications in industrial process control.” Computers &
+Chemical Engineering 139 (2020): 106886.
+Spielberg, S. P. K., R. B. Gopaluni, and P. D.
+Loewen. “Deep reinforcement learning approaches
+for process control.” 2017 6th international symposium on advanced control of industrial processes
+(AdCONIP). IEEE, 2017.
+Sutton, Richard S., and Andrew G. Barto. Introduction to reinforcement learning. Vol. 135. Cambridge:
+MIT press, 1998.
+Hafner, Roland, and Martin Riedmiller. “Reinforcement learning in feedback control: Challenges and
+benchmarks from technical process control.” Machine learning 84 (2011): 137-169.
+Faria, Ruan de Rezende, et al. “Where Reinforcement Learning Meets Process Control: Review and
+Guidelines.” Processes 10.11 (2022): 2311.
+Bao, Yaoyao, Yuanming Zhu, and Feng Qian. “A
+deep reinforcement learning approach to improve the
+learning performance in process control.” Industrial
+and Engineering Chemistry Research 60.15 (2021):
+5504-5515.
+
+[20]
+
+Patel, Kalpesh M. “A practical Reinforcement
+Learning implementation approach for continuous
+process control.” Computers and Chemical Engineering 174 (2023): 108232.
+
+
