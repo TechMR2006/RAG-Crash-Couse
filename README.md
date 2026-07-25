@@ -63,4 +63,15 @@ You can add more `.txt` files inside the `data` folder.
 
 
 ## Planning to create a different approach with the base concept of RAG 
+## 🎯 RAG Architecture Paradigms
+
+Planning to explore different approaches beyond standard RAG:
+
+| RAG Type | Core Mechanism | Best Used For |
+|---|---|---|
+| **Naive RAG** | Standard chunk-embed-retrieve loop | Simple Q&A on text |
+| **Advanced RAG** | Pre-retrieval and post-retrieval optimization | Complex document search |
+| **Modular RAG** | Flexible, non-linear routing and specialized steps | Multi-source, dynamic data |
+| **Corrective (CRAG)** | Self-grading and fallback search systems | High-accuracy automation |
+| **GraphRAG** | Knowledge graph connections between data | Trend analysis and reasoning |
 
