@@ -62,5 +62,5 @@ You can add more `.txt` files inside the `data` folder.
 
 
 
-
+## Planning to create a different approach with the base concept of RAG 
 
